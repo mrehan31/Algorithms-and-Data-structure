@@ -1,0 +1,22 @@
+// 98. Validate Binary Search Tree
+class Solution {
+public:
+    
+    bool helper(TreeNode* node, long lower, long upper){
+        if(node == NULL)    
+            return true;
+        
+        int val = node->val;
+        
+        if(val <= lower || val >= upper)  
+            return false;
+        
+        return helper(node->right, val, upper) && helper(node->left, lower, val);
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        
+        return helper(root, LLONG_MIN, LLONG_MAX);
+        
+    }
+};
