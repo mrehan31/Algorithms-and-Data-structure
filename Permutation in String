@@ -1,0 +1,33 @@
+// 567. Permutation in String
+
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        vector<int> goal(26), cur(26);
+        
+        for(char c: s1) goal[c-'a']++;
+        
+        int start=0, end=0;
+        
+        while(end<s2.size()){
+            cur[s2[end] - 'a']++;
+            
+            int windLen = end-start+1;
+            if(windLen < s1.size()){
+                end++;
+                continue;
+            }
+            
+            if(windLen > s1.size()){
+                cur[s2[start] - 'a']--;
+                start++;
+            }
+            
+            if(goal == cur)
+                return true;
+            
+            end++;
+        }
+        return false;
+    }
+};
