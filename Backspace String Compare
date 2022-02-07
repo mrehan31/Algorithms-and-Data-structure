@@ -1,0 +1,71 @@
+// 844. Backspace String Compare
+
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        int i = s.size()-1, j = t.size()-1;
+        
+        int skipS = 0, skipT = 0;
+        
+        while(i>=0 || j>=0){
+            while(i>= 0){
+                if(s[i] == '#') {skipS++; i--;}
+                else if(skipS>0){skipS--; i--;}
+                else break;
+            }
+            
+            while(j>= 0){
+                if(t[j] == '#') {skipT++; j--;}
+                else if(skipT>0){skipT--; j--;}
+                else break;
+            }
+            if(i>=0 && j>=0 && s[i] != t[j])
+                return false;
+            
+            if((i>=0) != (j>=0))
+                return false;
+            
+            i--;
+            j--;
+            
+        }
+        return true;
+    }
+};
+
+
+// Using stack
+
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        stack<char> S, T;
+        
+        for(char c:s){
+            if(c != '#')    S.push(c);
+            else if(!S.empty()) S.pop();
+        }
+        for(char c:t){
+            if(c != '#')    T.push(c);
+            else if(!T.empty()) T.pop();
+        }
+        
+        char ch1, ch2;
+        
+        while(!S.empty() && !T.empty()){
+            ch1 = S.top (); 
+            S.pop();
+            
+            ch2 = T.top();
+            T.pop();
+            
+            if(ch1 != ch2)  return false;   
+        }
+        
+        if(S.empty() && T.empty())  
+            return true;
+        else
+            return false;
+
+    }
+};
