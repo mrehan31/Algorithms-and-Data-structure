@@ -1,0 +1,40 @@
+// 141. Linked List Cycle
+
+// using set
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        
+        unordered_set<ListNode*> setOfNodes;
+        
+        while(head != NULL){
+            if(setOfNodes.count(head))  return true;
+            
+            setOfNodes.insert(head);
+            head = head->next;
+        }
+        return false;
+    }
+};
+
+
+
+// Using two pointers
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode * slow=head;
+        ListNode * fast=head;
+        
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            
+            if(fast == slow) 
+                return true;
+        }
+        return false;
+    }
+};
