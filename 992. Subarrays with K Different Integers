@@ -1,0 +1,31 @@
+// 992. Subarrays with K Different Integers
+
+class Solution {
+public:
+    int subarraysWithKDistinct(vector<int>& A, int K) {
+        return atMost(A, K) - atMost(A, K-1);
+    }
+    
+    int atMost(vector<int> &A, int K){
+        int res = 0, winStart = 0, winEnd = 0, count=0;
+        unordered_map<int, int> map;
+        
+        while(winEnd < A.size()){
+            if(!map[A[winEnd]]) count++;
+            
+            map[A[winEnd]]++;
+            
+            while(count>K){
+                map[A[winStart]]--;
+                if(!map[A[winStart]]) count--;
+                winStart++;
+            }
+            res += winEnd - winStart + 1;
+            
+            winEnd++;      
+        }
+        return res;
+    }
+};
+
+
