@@ -1,0 +1,24 @@
+// 1248. Count Number of Nice Subarrays
+
+class Solution {
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        return atMost(nums, k)- atMost(nums, k-1);
+    }
+    
+    int atMost(vector<int>&nums, int k){
+        int res = 0, winStart = 0, winEnd = 0, count = 0;
+        
+        while(winEnd < nums.size()){
+            count += nums[winEnd]%2;
+            
+            while(count>k){
+                count -= nums[winStart]%2;
+                winStart++;
+            }
+            res += winEnd - winStart + 1;
+            winEnd++;
+        }
+        return res;
+    }
+};
