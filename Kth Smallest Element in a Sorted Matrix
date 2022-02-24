@@ -1,0 +1,26 @@
+// 378. Kth Smallest Element in a Sorted Matrix
+
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int rowSize = matrix.size();
+        
+        int colSize = matrix[0].size();
+        
+        priority_queue<int> pq;
+        
+        for(int row=0; row<rowSize ; row++){
+            for(int col=0; col<colSize; col++){
+                if(pq.size() < k)
+                    pq.push(matrix[row][col]);
+                else{
+                    if(matrix[row][col] < pq.top()){
+                        pq.pop();
+                        pq.push(matrix[row][col]);
+                    }
+                }
+            }
+        }
+        return pq.top();
+    }
+};
