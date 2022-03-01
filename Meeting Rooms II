@@ -1,0 +1,19 @@
+// 253. Meeting Rooms II
+
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+        
+        priority_queue<int, vector<int>, greater<int>> minHeap;
+        
+        for(auto v: intervals){
+            
+            if(!minHeap.empty() && minHeap.top() <= v[0])
+                minHeap.pop();
+            
+            minHeap.push(v[1]);
+        }
+        return minHeap.size();
+    }
+};
