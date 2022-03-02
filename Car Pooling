@@ -1,0 +1,23 @@
+// 1094. Car Pooling
+
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
+        
+        for(auto t: trips){
+            minHeap.push({t[1], t[0]});
+            minHeap.push({t[2], -t[0]});
+        }
+        
+        while(!minHeap.empty()){
+            capacity -= minHeap.top().second;
+            minHeap.pop();
+            
+            if(capacity < 0)
+                return false;
+        }
+        return true;
+    }
+};
