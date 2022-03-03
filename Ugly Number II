@@ -1,0 +1,19 @@
+// 264. Ugly Number II
+
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        set<unsigned long> s = {1};
+        
+        auto it = s.begin();
+        int count = 1;
+        
+        while(count < n){
+            unsigned long val = *it;
+            s.insert({val*2, val*3, val*5});
+            it++;
+            count++;
+        }
+        return *it;
+    }
+};
