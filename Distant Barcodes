@@ -1,0 +1,31 @@
+// 1054. Distant Barcodes
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        
+        unordered_map<int, int> map;
+        
+        for(int b: barcodes) map[b]++;
+        
+        priority_queue<pair<int, int>> pq;
+        
+        for(auto it: map)
+            pq.push({it.second, it.first});
+        
+        int pos = 0;
+        
+        while(! pq.empty()){
+            auto v = pq.top();
+            pq.pop();
+            
+            for(int count=0; count<v.first; count++){
+                if(pos >= barcodes.size())
+                    pos = 1;
+                
+                barcodes[pos] = v.second;
+                pos += 2;
+            }
+        }
+        return barcodes;
+    }
+};
