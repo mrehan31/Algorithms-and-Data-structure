@@ -1,0 +1,31 @@
+// 429. N-ary Tree Level Order Traversal
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        vector<vector<int>> output;
+        vector<int> buffer;
+        
+        if(!root) return output;
+        
+        queue<Node *> q;
+        q.push(root);
+        
+        while(!q.empty()){
+            int size = q.size();
+            
+            buffer.clear();
+            
+            for(int i=0; i<size; i++){
+                Node * front = q.front();
+                q.pop();
+                
+                buffer.push_back(front->val);
+                for(Node * c: front->children)
+                    q.push(c);
+            }
+            output.push_back(buffer);
+        }
+        return output;
+    }
+};
