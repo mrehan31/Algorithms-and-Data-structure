@@ -1,0 +1,41 @@
+// 103. Binary Tree Zigzag Level Order Traversal
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        
+        vector<vector<int>> output;
+        vector<int> buffer;
+        bool left2right = true;
+        
+        if(!root) return output;
+        
+        queue<TreeNode *> q;
+        q.push(root);
+        
+        while(!q.empty()){
+            int size = q.size();
+            
+            buffer.clear();
+            
+            for(int i=0; i<size; i++){
+                TreeNode * front = q.front();
+                q.pop();
+                
+                buffer.push_back(front->val);
+                
+                if(front->left)     q.push(front->left);
+                
+                if(front->right)    q.push(front->right);
+            }
+
+            
+            if(left2right == false)
+                reverse(buffer.begin(), buffer.end());
+            
+            left2right ^= 1;
+            output.push_back(buffer);
+        }
+        return output;
+    }
+};
