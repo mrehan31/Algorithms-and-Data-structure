@@ -1,0 +1,37 @@
+// 1091. Shortest Path in Binary Matrix
+
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        
+        if(grid[0][0] == 1) return -1;
+        
+        int m = grid.size(), n = grid[0].size();
+        
+        queue<vector<int>> q;
+        
+        q.push({0, 0, 1});
+        grid[0][0] = 1;
+        
+        vector<vector<int>> dir = {{0,1},{1,0},{0,-1},{-1,0},{1,1},{1,-1},{-1,1},{-1,-1}};
+        
+        while(!q.empty()){
+            auto front = q.front();
+            q.pop();
+            
+            if(front[0] == m-1 && front[1] == n-1)
+                return front[2];
+            
+            for(auto d:dir){
+                int r = front[0] + d[0];
+                int c = front[1] + d[1];
+                
+                if(r>=0 && c >= 0 && r<m && c<n && grid[r][c] == 0){
+                    q.push({r,c, front[2]+1});
+                    grid[r][c] = 1;
+                }
+            }
+        }
+        return -1;      
+    }
+};
