@@ -1,0 +1,52 @@
+// 127. Word Ladder
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        
+        wordList.push_back(beginWord);
+        
+        unordered_map<string, vector<string>> neighbors;
+        
+        for(string w: wordList){
+            for(int i=0; i<w.size(); i++){
+                string pattern = w;
+                pattern[i] = '*';
+                neighbors[pattern].push_back(w);
+            }
+        }
+        
+        unordered_set<string> visited;
+        visited.insert(beginWord);
+        
+        queue<string>  q;
+        q.push(beginWord);
+        
+        int res = 1;
+        
+        while(!q.empty()){
+            int size = q.size();
+            
+            for(int i=0; i<size; i++){
+                string word = q.front();
+                q.pop();
+                
+                if(word == endWord) return res;
+                
+                for(int j=0; j< word.size(); j++){
+                    string pattern = word;
+                    pattern[j] = '*';
+                    
+                    for(string neiWord: neighbors[pattern]){
+                        if(!visited.count(neiWord)){
+                            visited.insert(neiWord);
+                            q.push(neiWord);                        
+                        }
+                    }
+                }
+            }
+            res += 1;
+        }
+        return 0;
+    }
+};
