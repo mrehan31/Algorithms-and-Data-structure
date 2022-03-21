@@ -1,0 +1,15 @@
+// 112. Path Sum
+
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int sum){
+        if(!root) return false;
+        
+        int new_sum = sum - root->val;
+        
+        if(!root->left && !root->right && new_sum == 0)
+            return true;
+        
+        return (hasPathSum(root->left, new_sum) || hasPathSum(root->right, new_sum));                    
+    }
+};
