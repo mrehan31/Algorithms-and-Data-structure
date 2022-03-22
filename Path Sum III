@@ -1,0 +1,24 @@
+// 437. Path Sum III
+
+class Solution {
+    int count = 0;
+public:
+    int pathSum(TreeNode* root, int sum) {
+        if(root){
+            pathSum(root->left, sum);
+            pathSum(root->right, sum);
+            dfs(root, sum);
+        }
+        return count;
+    }
+    void dfs(TreeNode* root, int sum){
+        if(!root)   return;
+        
+        if(root->val == sum)    count++;
+        
+        sum -= root->val;
+        
+        dfs(root->left, sum);
+        dfs(root->right, sum);
+    }
+};
