@@ -1,0 +1,19 @@
+// 663. Equal Tree Partition
+
+class Solution {
+private:
+    unordered_map<TreeNode*, int> _nodeValues;
+public:
+    bool checkEqualTree(TreeNode* root) {
+        int total = dfs(root);
+        if(total % 2 != 0) return false;
+        for(auto [node, val]: _nodeValues)
+            if(node!= root && val == total / 2) return true;
+        return false;        
+    }
+
+    int dfs(TreeNode* root){
+        if(!root) return 0;
+        return _nodeValues[root] = dfs(root->left) + dfs(root->right) + root->val;
+    }
+};
