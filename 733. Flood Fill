@@ -1,0 +1,25 @@
+// 733. Flood Fill
+
+class Solution {
+    vector<vector<int>> dir = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        int prevColor = image[sr][sc];
+        
+        if(prevColor == newColor)   return image;
+        else{
+            helper(image, sr, sc, newColor, prevColor);
+            return image;
+        }
+    }
+    
+    void helper(vector<vector<int>>& image, int sr, int sc, int newColor, int prevColor){
+        if(sr<0 || sr>=image.size() || sc<0 || sc>=image[0].size() || image[sr][sc] != prevColor) return;
+        else{
+            image[sr][sc] = newColor;
+            
+            for(auto d: dir)
+                helper(image, sr+d[0], sc+d[1], newColor, prevColor);
+        }
+    }
+};
