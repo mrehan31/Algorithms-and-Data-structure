@@ -1,0 +1,26 @@
+// 988. Smallest String Starting From Leaf
+
+class Solution {
+    string ans = "";
+public:
+    string smallestFromLeaf(TreeNode* root) {
+        dfs(root);
+        return ans;
+    }
+    
+    void dfs(TreeNode* root, string buffer=""){
+        if(!root) return;
+        
+        buffer.insert(buffer.begin(), root->val + 'a');
+        
+        if(!root->left && !root->right){
+            if(ans.empty())
+                ans = buffer;
+            else
+                ans = min(ans, buffer);
+        }
+        
+        dfs(root->left, buffer);
+        dfs(root->right, buffer);
+    }
+};
