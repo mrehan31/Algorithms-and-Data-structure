@@ -1,0 +1,23 @@
+// 129. Sum Root to Leaf Numbers
+
+class Solution {
+    int sum=0;
+public:
+    int sumNumbers(TreeNode* root) {
+        if(!root) return 0;
+        
+        helper(root, 0);
+        return sum;
+    }
+    
+    void helper(TreeNode *root, int buffer){
+        if(!root) return;
+        
+        buffer = buffer*10 + root->val;
+        
+        if(!root->left && !root->right) sum += buffer;
+        
+        helper(root->left, buffer);
+        helper(root->right, buffer);
+    }
+};
