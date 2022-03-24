@@ -1,0 +1,19 @@
+// 1315. Sum of Nodes with Even-Valued Grandparent (DFS approach)
+class Solution {
+    int sum = 0;
+public:
+    int sumEvenGrandparent(TreeNode* root) {
+        dfs(root, NULL, NULL);
+        return sum;
+    }
+    
+    void dfs(TreeNode* root, TreeNode * parent, TreeNode* grandparent){
+        if(!root)   return;
+        
+        if(grandparent && grandparent->val%2 == 0)
+            sum += root->val;
+        
+        dfs(root->left, root, parent);
+        dfs(root->right, root, parent);
+    }
+};
