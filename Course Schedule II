@@ -1,0 +1,52 @@
+// 210. Course Schedule II
+
+class Solution {
+public:    
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prereq) {
+        vector<int> courses;
+        
+        if(numCourses <= 0) return courses;
+        
+        unordered_map<int, int> inDegree;
+        unordered_map<int, vector<int>> graph;
+        
+        // Init the graph
+        for(int i=0; i<numCourses; i++){
+            inDegree[i] = 0;
+        }
+        
+        for(int i=0; i<prereq.size(); i++){
+            int child = prereq[i][0], parent = prereq[i][1];
+            graph[parent].push_back(child);
+            inDegree[child]++;
+        }
+        
+        queue<int> q;
+        
+        for(auto course:inDegree){
+            if(course.second == 0)
+                q.push(course.first);
+        }
+        
+        while(!q.empty()){
+            int cur = q.front();
+            q.pop();
+            
+            courses.push_back(cur);
+            
+            vector<int> children = graph[cur];
+            
+            for(auto child:children){
+                inDegree[child]--;
+                
+                if(inDegree[child] == 0)
+                    q.push(child);
+                
+            }
+        }
+        if(courses.size() != numCourses)
+            return vector<int>();
+        
+        return courses;
+    }
+};
