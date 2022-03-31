@@ -1,0 +1,38 @@
+// 329. Longest Increasing Path in a Matrix
+
+class Solution {
+    vector<vector<int>> dir = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+public:
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.size() == 0) return 0;
+        
+        int m = matrix.size(), n = matrix[0].size();
+        
+        vector<vector<int>> mem(m, vector<int>(n, -1));
+        
+        int longestPath = 0;
+        
+        for(int i=0; i<m; i++){
+            for(int j = 0; j<n; j++){
+                int pathLen = dfs(matrix, m, n, i, j, mem);
+                longestPath = max(longestPath, pathLen);
+            }
+        }
+        return longestPath;
+    }
+    
+    int dfs(vector<vector<int>>&matrix, int m, int n, int i, int j, vector<vector<int>> &mem){
+        int maxLen = 0;
+        
+        if(mem[i][j] != -1)     return mem[i][j];
+        
+        for(auto d: dir){
+            int ii = i + d[0], jj = j + d[1];
+            
+            if(ii>=0 && jj>=0 && ii<m && jj<n && matrix[i][j]<matrix[ii][jj])
+                maxLen = max(maxLen, dfs(matrix, m, n, ii, jj, mem));
+        }
+        mem[i][j] = maxLen+1;
+        return mem[i][j];
+    }
+};
