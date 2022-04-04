@@ -1,0 +1,42 @@
+// 1020. Number of Enclaves
+
+class Solution {
+public:
+    int row,col;
+    
+    
+    void dfs(vector<vector<int>>& nums,int i,int j){
+        vector<vector<int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        
+	// set value=2 and call dfs to its valid neighbours
+        nums[i][j]=2;
+        
+        for(auto d: dir){
+            int ii = i + d[0], jj = j + d[1];
+            
+            if(ii>=0 && ii<row && jj>=0 && jj<col && nums[ii][jj] == 1){
+                dfs(nums,ii, jj);
+            }
+        }
+    }
+    
+    int numEnclaves(vector<vector<int>>& nums){
+        int count=0;
+        row=nums.size(); col=nums[0].size();
+		//step1 traverse the boundary
+
+        for(int i=0;i<col;i++) if(nums[0][i]==1) dfs(nums,0,i);
+        for(int i=0;i<col;i++) if(nums[row-1][i]==1) dfs(nums,row-1,i);
+        for(int i=0;i<row;i++) if(nums[i][0]==1) dfs(nums,i,0);
+        for(int i=0;i<row;i++) if(nums[i][col-1]==1) dfs(nums,i,col-1);
+        
+		//step2 count number of 1 and restore the input
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(nums[i][j]==1) count++;
+                if(nums[i][j]==2) nums[i][j]=1;
+            }
+        }
+        return count;
+    }
+};
