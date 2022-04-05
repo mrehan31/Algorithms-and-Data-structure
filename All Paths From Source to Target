@@ -1,0 +1,25 @@
+// 797. All Paths From Source to Target
+class Solution {
+    vector<vector<int>> res;
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<int> buffer;
+        
+        dfs(graph, buffer, 0);
+        
+        return res;
+    }
+    
+    void dfs(vector<vector<int>>& graph, vector<int> buffer, int curNode){
+        buffer.push_back(curNode);
+        
+        if(curNode == graph.size()-1){
+            res.push_back(buffer);
+            return;
+        }
+        
+        for(auto node: graph[curNode]){
+            dfs(graph, buffer, node);
+        }
+    }
+};
