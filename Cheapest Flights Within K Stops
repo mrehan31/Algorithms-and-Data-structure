@@ -1,0 +1,26 @@
+// 787. Cheapest Flights Within K Stops
+
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        vector<int> price(n, INT_MAX);
+        
+        price[src] = 0;
+        
+        for(int i=0; i<=k; i++){
+            vector<int> temp(n);
+            
+            copy(price.begin(), price.end(), temp.begin());
+            
+            for(auto f: flights){
+                if(price[f[0]] == INT_MAX)  continue;
+                
+                if(temp[f[1]] > price[f[0]]+f[2])
+                    temp[f[1]] = price[f[0]]+f[2];
+            }
+            copy(temp.begin(), temp.end(), price.begin());
+        }
+        
+        return price[dst] != INT_MAX ? price[dst]: -1;
+    }
+};
