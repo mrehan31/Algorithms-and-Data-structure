@@ -1,0 +1,26 @@
+// 802. Find Eventual Safe States
+
+class Solution {
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        vector<int> color (graph.size(), 0), result;
+        
+        for(int i=0; i< graph.size(); i++){
+            if(color[i] == 2 || !ifCycle(graph, color, i))
+                result.push_back(i);
+        }
+        return result;
+    }
+    
+    bool ifCycle(vector<vector<int>> &graph, vector<int> &color, int node){
+        color[node] = 1;
+        
+        for(int n: graph[node]){
+            if(color[n] == 0 && ifCycle(graph, color, n))   return true;
+            
+            if(color[n] == 1) return true;
+        }
+        color[node] = 2;
+        return false;
+    }
+};
