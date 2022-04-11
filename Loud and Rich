@@ -1,0 +1,39 @@
+// 851. Loud and Rich
+class Solution {
+    vector<vector<int>> graph;
+    vector<int> ans;
+    
+public:
+    vector<int> loudAndRich(vector<vector<int>>& richer, vector<int>& quiet) {
+        int n = quiet.size();
+        
+        graph.resize(n);
+        
+        ans.resize(n, -1);
+        
+        for(auto pair: richer){
+            graph[pair[1]].push_back(pair[0]);
+        }
+        
+        for(int i=0; i<n; i++){
+            if(ans[i] == -1)
+                dfs(i, quiet);
+        }
+        
+        return ans;
+    }
+    
+    void dfs(int current, vector<int> quiet){
+        ans[current] = current;
+        
+        for(auto neighbor: graph[current]){
+            if(ans[neighbor] == -1)
+                dfs(neighbor, quiet);
+            
+            if(quiet[ans[current]] > quiet[ans[neighbor]]){
+                ans[current] = ans[neighbor];
+            }
+        }
+    }
+};
+
