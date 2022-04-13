@@ -1,0 +1,46 @@
+// 886. Possible Bipartition
+
+class Solution {
+    unordered_map<int, vector<int>> graph;
+    vector<int> color;
+    
+public:
+    bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
+        for(auto d:dislikes){
+            graph[d[0]].push_back(d[1]);
+            graph[d[1]].push_back(d[0]);
+        }
+        
+        color.resize(n+1, -1);
+        
+        for(int i=1; i<=n ;i++){
+            if(color[i] == -1){
+                if(!bfs(i)) return false;
+            }
+        }
+        return true;
+    }
+    
+    bool bfs(int i){
+        color[i] = 1;
+        
+        queue<int> q;
+        q.push(i);
+        
+        while(!q.empty()){
+            int cur = q.front();
+            q.pop();
+            
+            for(auto v:graph[cur]){
+                if(color[v] == -1){
+                    color[v] = 1 - color[cur];
+                    q.push(v);
+                }
+                else{
+                    if(color[cur] == color[v])  return false;
+                }
+            }
+        }
+        return true;
+    }
+};
