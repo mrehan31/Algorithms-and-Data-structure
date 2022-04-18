@@ -1,0 +1,28 @@
+// 173. Binary Search Tree Iterator
+
+class BSTIterator {
+    stack<TreeNode*> stk;
+    
+    void partialInorder(TreeNode * root){
+        while(root != NULL){
+            stk.push(root);
+            root = root->left;
+        }
+    }
+    
+public:
+    BSTIterator(TreeNode* root) {
+        partialInorder(root);
+    }
+    
+    int next() {
+        TreeNode * top = stk.top();
+        stk.pop();
+        partialInorder(top->right);
+        return top->val;
+    }
+    
+    bool hasNext() {
+        return !stk.empty();
+    }
+};
