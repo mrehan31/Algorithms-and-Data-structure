@@ -1,0 +1,41 @@
+// 316. Remove Duplicate Letters
+
+class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+        string res = "";
+        
+        unordered_map<char, int> mp;
+        unordered_map<char, bool> visited;
+        
+        stack<int> stk;
+        
+        for(auto c: s)
+            mp[c]++;
+        
+        for(auto iter=mp.begin(); iter!=mp.end(); iter++){
+            visited[iter->first] = false;
+        }
+        
+        for(int i=0; i<s.size(); i++){
+            mp[s[i]]--;
+            
+            if(visited[s[i]])   continue;
+            
+            while(!stk.empty() && s[i] < s[stk.top()] && mp[s[stk.top()]] > 0){
+                visited[s[stk.top()]] = false;
+                stk.pop();
+            }
+            
+            stk.push(i);
+            visited[s[i]] = true;
+        }
+        
+        while(!stk.empty()){
+            res = s[stk.top()]+res;
+            stk.pop();
+        }
+        return res;
+    }
+};
+
