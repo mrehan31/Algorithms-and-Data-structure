@@ -1,0 +1,23 @@
+// 22. Generate Parentheses
+
+class Solution {
+    
+    vector<string> result;
+
+public:
+    vector<string> generateParenthesis(int n) {
+        helper("", n, n);
+        return result;
+    }
+    
+    void helper(string str, int left, int right){
+        if(right == 0 && left == 0){
+            result.push_back(str);
+            return;
+        }
+        
+        if(left > 0)    helper(str+"(", left-1, right);
+        
+        if(right > left)    helper(str+")", left, right-1);
+    }
+};
