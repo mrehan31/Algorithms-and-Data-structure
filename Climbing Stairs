@@ -1,0 +1,70 @@
+// 70. Climbing Stairs
+
+
+/*class Solution {
+    
+public:
+    int climbStairs(int n) {
+        vector<int> mem(47, -1);
+        return computeStairs(0, n, mem);
+    }
+    
+    int computeStairs(int i, int n, vector<int> &mem){
+        if(i > n)   return 0;
+        if(i == n)  return 1;
+        
+        if(mem[i+1] == -1) 
+            mem[i+1] = computeStairs(i+1, n, mem);
+        
+        if(mem[i+2] == -1)
+            mem[i+2] = computeStairs(i+2, n, mem);
+        
+        return mem[i+1] + mem[i+2];
+    }
+};*/
+
+
+/*class Solution {
+    
+public:
+    int climbStairs(int n) {
+        
+        vector<int> dp(n+1, 0);
+        
+        if(n == 0 || n == 1)  return 1;
+        
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+        
+        for(int i=3; i<=n; i++)
+            dp[i] = dp[i-1] + dp[i-2];
+        
+        return dp[n];   
+    }
+};*/
+
+class Solution {
+    
+public:
+    int climbStairs(int n) {
+        
+        if(n == 0 || n == 1)  return 1;
+        
+        if(n == 2)  return 2;
+        
+        int dpim2 = 1;
+        int dpim1 = 2;
+        
+        int dpi = 0;
+        
+        for(int i=3; i<=n; i++){
+            dpi = dpim1 + dpim2;
+            
+            dpim2 = dpim1;
+            dpim1 = dpi;
+        }
+        
+        return dpi;   
+    }
+};
