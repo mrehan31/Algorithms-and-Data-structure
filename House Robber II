@@ -1,0 +1,25 @@
+// 213. House Robber II
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if (nums.size() == 2)   return max(nums[0], nums[1]);
+        
+        return max(helper(nums, 0, nums.size()-1), helper(nums, 1, nums.size()));
+    }
+    
+    int helper(vector<int>& nums, int start, int end) {
+        if(nums.size() == 1)    return nums[0];
+        
+        int dp_im2 = nums[start];
+        int dp_im1 = max(nums[start], nums[start+1]);
+        int dp_i = dp_im1;
+        
+        for(int i=start+2; i<end; i++){
+            dp_i = max(nums[i]+dp_im2, dp_im1);
+            dp_im2 = dp_im1;
+            dp_im1 = dp_i;
+        }
+        return dp_i;
+    }
+};
