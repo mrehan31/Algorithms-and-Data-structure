@@ -1,0 +1,23 @@
+// 366. Find Leaves of Binary Tree
+
+class Solution {
+    vector<vector<int>> ans;
+public:    
+    vector<vector<int>> findLeaves(TreeNode* root) {
+        int h = getHeight(root);
+        ans.resize(h);
+        dfs(root);
+        return ans;
+    }
+    int getHeight(TreeNode *root){
+        return root? 1 + max(getHeight(root->left), getHeight(root->right)):0;
+    }
+    int dfs(TreeNode *root){
+        if(root == nullptr) return 0;
+        int nodeHeight = 1 + max(dfs(root->left), dfs(root->right));
+        ans[nodeHeight-1].push_back(root->val);
+        
+        return nodeHeight;
+    } 
+};
+
