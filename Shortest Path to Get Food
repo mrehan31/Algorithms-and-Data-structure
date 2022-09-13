@@ -1,0 +1,44 @@
+// 1730. Shortest Path to Get Food
+
+class Solution {
+    vector<vector<int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+public:
+    int getFood(vector<vector<char>>& grid) {
+        queue<pair<int, int>> q;
+        
+        int steps=0, m = grid.size(), n = grid[0].size();
+        for(int i=0; i<m && q.empty() ;i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j] == '*'){
+                    q.push({i, j});
+                    break;
+                }
+            }
+        }
+        
+        while(!q.empty()){
+            int size = q.size();
+            steps++;
+            
+            for(int i=0; i<size; i++){
+                auto temp = q.front();
+                q.pop();
+                
+                for(auto d: dir){
+                    int r = temp.first + d[0];
+                    int c = temp.second + d[1];
+                    
+                    if(r<0 || r>=m || c<0 || c>=n || grid[r][c] == 'X')
+                        continue;
+                    
+                    if(grid[r][c] == '#')
+                        return steps;
+                    
+                    grid[r][c] = 'X';
+                    q.push({r,c});
+                }
+            }
+        }
+        return -1;
+    }
+};
