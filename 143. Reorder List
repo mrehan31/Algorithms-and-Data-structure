@@ -1,0 +1,53 @@
+// 143. Reorder List
+
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+
+        if(!head || !head->next || !head->next->next)   return;
+
+        ListNode * last2mid;
+
+        last2mid = findMiddleNode(head);
+
+        last2mid->next = reverseLinkedList(last2mid->next);
+        ListNode* second = last2mid->next;
+        last2mid->next = nullptr;
+
+        reorderLinkedList(head, second);
+    }
+
+    void reorderLinkedList(ListNode* first, ListNode* second){
+        ListNode *temp1, *temp2;
+        while(second){
+            temp1 = first->next;
+            temp2 = second->next;
+            first->next = second;
+            second->next = temp1;
+            first = temp1;
+            second = temp2;
+        }
+    }
+    ListNode* reverseLinkedList(ListNode *head){
+        ListNode* prev = nullptr, *temp;
+
+        while(head){
+            temp = head->next;
+            head->next = prev;
+            prev = head;
+            head = temp;
+        }
+        return prev;
+    }
+    
+    ListNode* findMiddleNode(ListNode *head){
+
+        ListNode* fast = head->next, *slow = head, *prev = nullptr;
+
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+};
