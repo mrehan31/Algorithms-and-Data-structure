@@ -1,0 +1,26 @@
+// 513. Find Bottom Left Tree Value
+ 
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+
+        int ret = 0;
+
+        while(!q.empty()){
+            int size = q.size();
+
+            for(int i=0; i<size; i++){
+                auto cur = q.front();
+                q.pop();
+
+                ret = cur->val;
+
+                if(cur->right)  q.push(cur->right);
+                if(cur->left)   q.push(cur->left);
+            }
+        }
+        return ret;
+    }
+};
