@@ -1,0 +1,43 @@
+// 297. Serialize and Deserialize Binary Tree
+ 
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        if(root == nullptr) return "null,";
+
+        string s1 = to_string(root->val)+",";
+        string s2 = serialize(root->left);
+        string s3 = serialize(root->right); 
+        return s1 + s2 + s3;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        queue<string> q;
+
+        string s = "";
+
+        for(char ch:data){
+            if(ch == ','){
+                q.push(s);
+                s = "";
+            }
+            else
+                s += ch;
+        }
+        return createTree(q);
+    }
+    TreeNode * createTree(queue<string> &q){
+        string s = q.front();
+        q.pop();
+
+        if(s == "null")  return nullptr;
+
+        TreeNode* t = new TreeNode(stoi(s));
+        t->left = createTree(q);
+        t->right = createTree(q);
+        return t;
+    }
+};
