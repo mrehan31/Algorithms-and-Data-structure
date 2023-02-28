@@ -1,0 +1,25 @@
+// 179. Largest Number
+
+class Solution {
+public:
+    static bool comp(string &a, string &b){
+        return a+b>b+a;
+    }
+    string largestNumber(vector<int>& nums) {
+        
+        vector<string> container;
+
+        for(int n: nums){
+            container.push_back(to_string(n));
+        }
+
+        sort(container.begin(), container.end(), comp);
+
+        string res = "";
+
+        for(string str: container)
+            res += str;
+
+        return res[0] == '0'? "0": res;
+    }
+};
