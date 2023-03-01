@@ -1,0 +1,38 @@
+// 380. Insert Delete GetRandom O(1)
+
+class RandomizedSet {
+    unordered_map<int, int> map;
+    vector<int> data;
+
+public:
+    RandomizedSet() {
+    }
+    
+    bool insert(int val) {
+        if(map.count(val))  
+            return false;
+        else{
+            map[val] = data.size();
+            data.push_back(val);
+            return true;
+        }
+    }
+    
+    bool remove(int val) {
+        if(map.count(val) == 0)
+            return false;
+        else{
+            int last_val = data[data.size()-1];
+            int ind = map[val];
+            data[ind] = last_val;
+            map[last_val] = ind;
+            data.pop_back();
+            map.erase(val);
+            return true;
+        }
+    }
+    
+    int getRandom() {
+        return data[rand() % data.size()];
+    }
+};
