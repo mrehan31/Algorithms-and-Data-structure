@@ -1,0 +1,25 @@
+// 929. Unique Email Addresses
+
+class Solution {
+public:
+    int numUniqueEmails(vector<string>& emails) {
+        unordered_set<string> set;
+
+        for(string &email: emails){
+            string cleanedStr = "";
+
+            for(int i=0; i<email.size(); i++){
+                if(email[i] == '.') continue;
+                if(email[i] == '+' || email[i] == '@')  break;
+
+                cleanedStr.push_back(email[i]);
+            }
+        int idx = email.size()-1;
+        while(email[idx] != '@')    idx--;
+
+        cleanedStr = cleanedStr + email.substr(idx, email.size() - idx);
+        set.insert(cleanedStr);
+        }
+        return set.size();
+    }
+};
