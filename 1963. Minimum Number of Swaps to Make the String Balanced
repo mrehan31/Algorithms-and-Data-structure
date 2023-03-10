@@ -1,0 +1,18 @@
+// 1963. Minimum Number of Swaps to Make the String Balanced
+
+class Solution {
+public:
+    int minSwaps(string s) {
+        int maxCount = 0, count = 0;
+
+        for(char ch: s){
+            if(ch == ']')   
+                count++;
+            else
+                count--;
+            
+            maxCount = max(maxCount, count);
+        }
+        return (maxCount + 1)/2;
+    }
+};
