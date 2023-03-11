@@ -1,0 +1,34 @@
+
+// 1876. Substrings of Size Three with Distinct Characters
+
+class Solution {
+public:
+    int countGoodSubstrings(string s) {
+        unordered_map<char, int> map;
+        int cnt = 0;
+        if(s.size()<3)  return 0;
+
+        int start = 0, end = 0;
+
+        while(end<3){
+            map[s[end]]++;
+            end++;
+        }
+        if(map.size() == 3) cnt++;
+        
+        while(end<s.size()){
+            map[s[end]]++;
+
+            map[s[start]]--;
+            
+            if(map[s[start]] == 0)
+                map.erase(s[start]);
+
+            if(map.size() == 3) cnt++;
+
+            end++;
+            start++;
+        }
+        return cnt;
+    }
+};
