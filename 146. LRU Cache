@@ -1,0 +1,81 @@
+// 146. LRU Cache
+
+class LRUCache {
+    int cap;
+
+    struct Node{
+        int key, val;
+        struct Node* prev, *next;
+
+        Node(int x, int y){
+            key = x;
+            val = y;
+            prev = nullptr;
+            next = nullptr;
+        }
+    };
+    unordered_map<int, Node*> map;
+    Node *head, *tail;
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+        head = new Node(0, 0);
+        tail = new Node(0, 0);
+        head->next = tail;
+        tail->prev = head;
+    }
+    
+    int get(int key) {
+        if(map.count(key)){
+            Node* x = map[key];
+            int res = x->val;
+            deleteNode(x);
+            map.erase(key);
+            Node* newNode = createNode(key, res);
+            map[key] = newNode;
+            return res;
+        }
+        else
+            return -1;
+    }
+    Node * createNode(int key, int val){
+        Node* newNode = new Node(key, val);
+        newNode->next = head->next;
+        head->next->prev = newNode;
+
+        head->next = newNode;
+        newNode->prev = head;
+        return newNode;
+    }
+    void deleteNode(Node * x){
+        x->prev->next = x->next;
+        x->next->prev = x->prev;
+        x->next = nullptr;
+        x->prev = nullptr;
+        delete x;
+    }
+    
+    void put(int key, int value) {
+        if(map.count(key)== 0){
+            if(map.size() < cap){
+                Node * newNode = createNode(key, value);
+                map[key] = newNode;
+            }
+            else{
+                Node* x = tail->prev;
+                int y = x->key;
+                deleteNode(x);
+                map.erase(y);
+                Node * newNode = createNode(key, value);
+                map[key] = newNode;     
+            }
+        }
+        else{
+            Node* x = map[key];
+            deleteNode(x);
+            map.erase(key);
+            Node * newNode = createNode(key, value);
+            map[key] = newNode;
+        }
+    }
+};
