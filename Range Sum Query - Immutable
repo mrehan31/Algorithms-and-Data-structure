@@ -1,0 +1,18 @@
+// 303. Range Sum Query - Immutable
+
+class NumArray {
+    vector<int> rangeSum;
+public:
+    NumArray(vector<int>& nums) {
+        int total = 0;
+        rangeSum.push_back(0);
+
+        for(int n:nums){
+            total += n;
+            rangeSum.push_back(total);
+        }
+    }
+    int sumRange(int left, int right) {
+        return rangeSum[right+1] - rangeSum[left];
+    }
+};
