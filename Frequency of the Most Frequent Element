@@ -1,0 +1,23 @@
+// 1838. Frequency of the Most Frequent Element
+
+class Solution {
+public:
+    int maxFrequency(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        int start = 0, end = 0, maxLen = 0;
+
+        long sum = 0;
+
+        while(end<nums.size()){
+            sum += nums[end];
+
+            if(sum + k < ((end-start+1)*(long)nums[end])){
+                sum -= nums[start];
+                start++;
+            }
+            maxLen = max(maxLen, end-start+1);
+            end++;
+        }
+        return maxLen;
+    }
+};
