@@ -1,0 +1,34 @@
+// 76. Minimum Window Substring
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> map_s, map_t;
+        string res = "";
+        int start = 0, end = 0, minLen = INT_MAX, letterCount = 0;
+
+        for(char ch:t)  map_t[ch]++;
+
+        while(end<s.size()){
+            char ch = s[end];
+
+            if(map_t.count(ch)){
+                map_s[ch]++;
+                if(map_s[ch] <= map_t[ch])  letterCount++;
+            }
+
+            if(letterCount == t.size()){
+                while(map_t.count(s[start]) == 0 || map_s[s[start]] > map_t[s[start]]){
+                    map_s[s[start]]--;
+                    start++;
+                }
+                if(end-start+1 < minLen){
+                    minLen = end - start + 1;
+                    res = s.substr(start, minLen);
+                }
+            }
+            end++;
+        } 
+        return res;  
+    }
+};
