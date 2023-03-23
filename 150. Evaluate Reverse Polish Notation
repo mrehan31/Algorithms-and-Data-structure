@@ -1,0 +1,49 @@
+// 150. Evaluate Reverse Polish Notation
+
+class Solution {
+    stack<int> stk;
+public:
+    int evalRPN(vector<string>& tokens) {
+
+        for(string str:tokens){
+            if(str != "+" && str != "*" && str != "/" && str != "-"){
+                stk.push(stoi(str));
+            }
+            else{
+                if(str == "+"){
+                    int num1 = stk.top(); 
+                    stk.pop();
+                    int num2 = stk.top();
+                    stk.pop();
+
+                    stk.push(num2+num1);
+                }
+                if(str == "-"){
+                    int num1 = stk.top(); 
+                    stk.pop();
+                    int num2 = stk.top();
+                    stk.pop();
+
+                    stk.push(num2-num1);
+                }
+                if(str == "*"){
+                    int num1 = stk.top(); 
+                    stk.pop();
+                    int num2 = stk.top();
+                    stk.pop();
+
+                    stk.push(num2*num1);
+                }
+                if(str == "/"){
+                    int num1 = stk.top(); 
+                    stk.pop();
+                    int num2 = stk.top();
+                    stk.pop();
+
+                    stk.push(num2/num1);
+                }
+            }
+        }
+        return stk.top();
+   }
+};
