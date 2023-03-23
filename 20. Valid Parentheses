@@ -1,0 +1,25 @@
+// 20. Valid Parentheses
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> stk;
+
+        unordered_map<char, char> map = {
+                                        {')', '('}, 
+                                        {'}', '{'}, 
+                                        {']', '['}};
+
+        for(char ch:s){
+            if(map.count(ch) == 0)  
+                stk.push(ch);
+            else{
+                if(!stk.empty() && map[ch] == stk.top())
+                    stk.pop();
+                else
+                    return false;
+            }
+        }
+        return stk.empty();
+    }
+};
