@@ -1,0 +1,34 @@
+// 682. Baseball Game
+
+class Solution {
+public:
+    int calPoints(vector<string>& oper) {
+      stack<int> stk;
+
+      int sum = 0;
+
+      for(string op: oper){
+        if(op != "+" && op != "D" && op != "C"){
+          stk.push(stoi(op));
+        }
+        else{
+          if(op == "+"){
+            int num1 = stk.top();
+            stk.pop();
+            int num2 = num1 + stk.top();
+            stk.push(num1);
+            stk.push(num2);
+          }
+          if(op == "D"){
+            stk.push(2*stk.top());
+          }
+          if(op == "C") stk.pop();
+        }
+      }
+      while(!stk.empty()){
+        sum += stk.top(); 
+        stk.pop();
+      }
+      return sum;
+    }
+};
