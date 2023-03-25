@@ -1,0 +1,20 @@
+// 22. Generate Parentheses
+
+class Solution {
+    vector<string> res;
+public:
+    vector<string> generateParenthesis(int n) {
+        helper("", n, n);
+        return res;
+    }
+
+    void helper(string buffer, int leftCount, int rightCount){
+        if(leftCount == 0 && rightCount == 0){
+            res.push_back(buffer);
+            return;
+        }
+
+        if(leftCount>0)             helper(buffer+"(", leftCount-1, rightCount);
+        if(rightCount > leftCount)   helper(buffer+")", leftCount, rightCount-1);
+    }
+};
