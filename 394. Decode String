@@ -1,0 +1,43 @@
+// 394. Decode String
+
+class Solution {
+public:
+    string decodeString(string s) {
+       if(s.size() == 0)    return s;
+       string buffer = "", res = "";
+
+       stack<char> stk;
+
+       for(char ch: s){
+            if(ch != ']')    
+                stk.push(ch);
+            else{
+                while(!stk.empty() && stk.top() != '['){
+                    buffer = stk.top() + buffer;
+                    stk.pop();
+                }
+                stk.pop(); // pop the '['
+
+                string dig = "";
+                while(!stk.empty() && isdigit(stk.top())){
+                    dig = stk.top() + dig;
+                    stk.pop();
+                }
+
+                int count = stoi(dig);
+                while(count>0){
+                    for(int i=0; i< buffer.size(); i++){
+                        stk.push(buffer[i]);
+                    }
+                    count--;
+                }
+                buffer = "";
+            }
+       } 
+       while(!stk.empty()){
+           res = stk.top() + res;
+           stk.pop();
+       }
+       return res;
+    }
+};
