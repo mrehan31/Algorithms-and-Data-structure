@@ -1,0 +1,25 @@
+// 402. Remove K Digits
+
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        string res = "";
+
+        for(char n: num){
+            while(res.size() && n < res.back() && k >0){
+                res.pop_back();
+                k--;
+            }
+        
+            if(res.size() != 0 || n != '0') res.push_back(n);
+        }
+
+        while(res.size() && k != 0){
+            res.pop_back();
+            k--;
+        }
+
+        return res.size() == 0 ? "0":res;
+    }
+};
+
