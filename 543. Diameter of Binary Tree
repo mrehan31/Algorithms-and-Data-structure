@@ -1,0 +1,22 @@
+// 543. Diameter of Binary Tree
+
+
+class Solution {
+    int maxDia = 0;
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(!root)   return 0;
+        helper(root);
+
+        return maxDia;
+    }
+    int helper(TreeNode* root) {
+        if(!root)   return 0;
+        int lmax = helper(root->left);
+        int rmax = helper(root->right);
+
+        maxDia = max(maxDia, lmax + rmax);
+
+        return 1+ max(lmax, rmax);
+    }
+};
