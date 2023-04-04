@@ -1,0 +1,22 @@
+// 110. Balanced Binary Tree
+
+class Solution {
+    bool flag = true;
+public:
+    bool isBalanced(TreeNode* root) {
+        if(!root)   return true;
+        helper(root);
+        return flag;
+    }
+
+    int helper(TreeNode* root){
+        if(!root)   return 0;
+    
+        int lh = helper(root->left);
+        int rh = helper(root->right);
+
+        if(abs(lh - rh) > 1)    flag = false;
+
+        return 1 + max(lh, rh);
+    }
+};
