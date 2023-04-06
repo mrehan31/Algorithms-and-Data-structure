@@ -1,0 +1,23 @@
+// 129. Sum Root to Leaf Numbers
+
+class Solution {
+    int sum = 0;
+public:
+    int sumNumbers(TreeNode* root) {
+        if(!root)   return 0;
+        helper(root, 0);
+        return sum;
+    }
+    void helper(TreeNode* root, int pathSum){
+        
+        pathSum = pathSum*10 + root->val;
+
+        if(!root->left && !root->right){
+            sum += pathSum;
+            return;
+        }
+
+        if(root->left)  helper(root->left, pathSum);
+        if(root->right) helper(root->right, pathSum);
+    }
+};
