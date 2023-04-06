@@ -1,0 +1,22 @@
+// 337. House Robber III
+
+class Solution {
+public:
+    int rob(TreeNode* root) {
+        if(!root)   return 0;
+
+        vector<int> ret = dfs(root);
+        return max(ret[0], ret[1]);
+    }
+
+    vector<int> dfs(TreeNode* root){
+        if(!root)   return {0, 0};
+
+        vector<int> leftPair = dfs(root->left);
+        vector<int> rightPair = dfs(root->right);
+
+        int withRoot = root->val + leftPair[1] + rightPair[1];
+        int withOutRoot = max(leftPair[0], leftPair[1]) + max(rightPair[0], rightPair[1]);
+        return {withRoot, withOutRoot};
+    }
+};
