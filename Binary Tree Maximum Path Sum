@@ -1,0 +1,23 @@
+// 124. Binary Tree Maximum Path Sum
+
+class Solution {
+    int maxSum = INT_MIN;
+public:
+    int maxPathSum(TreeNode* root) {
+        if(!root)   return 0;
+
+        helper(root);
+        return maxSum;
+    }
+    int helper(TreeNode * root){
+        if(!root)   return 0;
+
+        int leftMax = max(helper(root->left), 0);
+        int rightMax = max(helper(root->right), 0);
+        
+        maxSum = max(maxSum, root->val + leftMax + rightMax);
+
+        return root->val + max(leftMax, rightMax);
+    }
+};
+
