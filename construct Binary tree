@@ -1,0 +1,25 @@
+class Solution {
+    int ind = 0;
+public:
+    TreeNode* buildTree(vector<int>& pre, vector<int>& inord) {
+       return generateTree(pre, inord, 0, inord.size()-1);
+    }
+
+    TreeNode* generateTree(vector<int>&pre, vector<int>&inord, int start, int end){
+        if(start > end) return nullptr;
+
+        int val = pre[ind++];
+        TreeNode* node = new TreeNode(val);
+
+        int pos;
+        for(int i=0; i<inord.size(); i++){
+            if(inord[i] == val){
+                pos = i;
+                break;
+            }
+        }
+        node->left = generateTree(pre, inord, start, pos-1);
+        node->right = generateTree(pre, inord, pos+1, end);
+        return node;
+    }
+};
