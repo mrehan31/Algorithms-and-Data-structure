@@ -1,0 +1,23 @@
+// 96. Unique Binary Search Trees
+
+class Solution {
+public:
+    int numTrees(int n) {
+        vector<int> dp(20, -1);
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+        helper(n, dp);
+        return dp[n];
+    }
+
+    int helper(int n, vector<int>&dp){
+        if(dp[n] != -1) return dp[n];
+
+        int count = 0;
+        for(int i=1; i<=n; i++){
+            count += helper(i-1, dp)*helper(n-i, dp);
+        }
+        return dp[n] = count;
+    }
+};
