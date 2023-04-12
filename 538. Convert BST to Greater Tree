@@ -1,0 +1,21 @@
+// 538. Convert BST to Greater Tree
+ 
+class Solution {
+    int curSum = 0;
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if(!root)   return root;
+        helper(root);
+        return root;
+    }
+
+    void helper(TreeNode* root){
+        if(!root) return;
+
+        helper(root->right);
+        curSum += root->val;
+        root->val = curSum;
+        helper(root->left);
+    }
+};
+
