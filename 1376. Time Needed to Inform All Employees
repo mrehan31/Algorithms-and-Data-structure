@@ -1,0 +1,23 @@
+class Solution {
+    int maxTime = 0;
+public:
+    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+        unordered_map<int, vector<int>> adjMap;
+
+        for(int i=0; i<manager.size(); i++){
+            if(manager[i] != -1)
+                adjMap[manager[i]].push_back(i);
+        }
+
+        helper(adjMap, headID, 0, informTime);
+        return maxTime;
+    }
+
+    void helper(unordered_map<int, vector<int>> &adjMap, int curEmp, int pathSum, vector<int>&informTime){
+        maxTime = max(maxTime, pathSum);
+
+        for(auto sub: adjMap[curEmp]){
+            helper(adjMap, sub, pathSum + informTime[curEmp], informTime);
+        }
+    }
+};
