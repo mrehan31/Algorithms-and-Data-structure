@@ -1,0 +1,27 @@
+// 2187. Minimum Time to Complete Trips
+
+
+class Solution {
+public:
+    long long minimumTime(vector<int>& time, int totalTrips) {
+        long long l = 0, h = 1LL * time[0] * totalTrips;
+        long long res = 0;
+
+        while(l<=h){
+            long long mid = l + (h-l)/2;
+
+            long long trips = 0;
+
+            for(long long t:time) trips += mid/t;
+
+            if(trips < totalTrips){
+                l = mid + 1;
+            }
+            else{
+                res = mid;
+                h = mid - 1;
+            }
+        }
+        return res;
+    }
+};
