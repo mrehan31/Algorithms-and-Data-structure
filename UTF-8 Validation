@@ -1,0 +1,40 @@
+// 393. UTF-8 Validation
+
+
+class Solution {
+public:
+    bool validUtf8(vector<int>& data) {
+        int numOfBytes = 0;
+
+        int i=0;
+
+        while(i<data.size()){
+        
+            numOfBytes = 0;
+            if((data[i] & 0x80) == 0){
+                numOfBytes = 0;
+                i++;
+                continue;
+            }
+
+            else if((data[i] & 0xE0) == 0xC0) numOfBytes = 2;
+
+            else if((data[i] & 0xF0) == 0xE0) numOfBytes = 3;
+
+            else if((data[i] & 0xF8) == 0xF0) numOfBytes = 4;
+
+            else    return false;
+
+
+            i++;
+
+            while(--numOfBytes && i<data.size()){
+                if((data[i] & 0xC0) != 0x80)  return false;
+                i++;
+            }
+        }
+        if(numOfBytes !=0)  return false;
+
+        return true;
+    }
+};
