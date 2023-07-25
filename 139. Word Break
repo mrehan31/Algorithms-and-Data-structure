@@ -1,0 +1,28 @@
+// 139. Word Break
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> set(wordDict.begin(), wordDict.end());
+        vector<int> dp(s.size()+1, -1);
+        return helper(s, set, 0, dp);
+    }
+
+    bool helper(string &s, unordered_set<string>&set, int i, vector<int>&dp){
+        if(i>= s.size())    return true;
+
+        bool ret = false;
+
+        if(dp[i] != -1) return dp[i] == 1? true:false;
+        
+        for(int j=i; j<s.size(); j++){
+            string str = s.substr(i, j-i+1);
+            if(set.count(str)){
+                ret |= helper(s, set, j+1, dp);
+                if(ret) break;
+            }
+        }
+        dp[i] = ret?1:0;
+        return ret;
+    }
+};
