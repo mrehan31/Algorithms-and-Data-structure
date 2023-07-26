@@ -1,0 +1,27 @@
+// 2305. Fair Distribution of Cookies
+
+class Solution {
+    int ret = INT_MAX;
+public:
+    int distributeCookies(vector<int>& cookies, int k) {
+        vector<int> eachShare(k, 0);
+        helper(cookies, k, 0, eachShare);
+        return ret;
+    }
+    void helper(vector<int>& cookies, int k, int i, vector<int>& eachShare){
+        if(i==cookies.size()){
+            int maxCand = 0;
+            for(int j=0; j<k; j++){
+                maxCand = max(maxCand, eachShare[j]);
+            }
+            ret = min(ret, maxCand);
+            return;
+        }
+
+        for(int j=0; j<k; j++){
+            eachShare[j] += cookies[i];
+            helper(cookies, k, i+1, eachShare);
+            eachShare[j] -= cookies[i];
+        }
+    }
+};
