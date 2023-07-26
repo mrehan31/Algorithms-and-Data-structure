@@ -1,0 +1,39 @@
+// 990. Satisfiability of Equality Equations
+
+class Solution {
+    
+public:
+    bool equationsPossible(vector<string>& eqs) {
+
+        sort(eqs.begin(), eqs.end(), [](string &a, string&b){
+            return a[1] == '=' && b[1] != '=';
+        });
+        vector<int> data(26, 0);
+
+        for(int i=0; i<data.size(); i++)    data[i] = i;
+
+        for(auto eq: eqs){
+            char left = eq[0], right = eq[3];
+            bool isEqual = eq[1] == '=';
+
+            if(isEqual){
+                Union(left, right, data);
+            }
+            else{
+                if(find(left - 'a', data) == find(right - 'a', data))   return false;
+            }
+        }
+        return true;
+    }
+    int find(int x, vector<int>& data){
+        if(x == data[x])    return x;
+        else    return find(data[x], data);
+    }
+    void Union(char left, char right, vector<int>&data){
+        int par_left = find(left - 'a', data), par_right = find(right - 'a', data);
+
+        if(par_left == par_right)   return;
+
+        data[par_left] = par_right;
+    }
+};
