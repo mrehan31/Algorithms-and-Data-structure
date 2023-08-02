@@ -1,0 +1,53 @@
+// 2385. Amount of Time for Binary Tree to Be Infected
+
+class Solution {
+    unordered_map<TreeNode*, vector<TreeNode*>> adjList;
+    TreeNode *start_ptr = nullptr;
+    unordered_set<TreeNode*> visited;
+public:
+    int amountOfTime(TreeNode* root, int start) {
+        helper(root, start);
+
+        int dist = 0;
+
+        queue<TreeNode*> q;
+        q.push(start_ptr);
+        visited.insert(start_ptr);
+
+        while(!q.empty()){
+            int size = q.size();
+            
+            for(int i=0; i<size; i++){
+                TreeNode* cur = q.front();
+                q.pop();
+
+                for(auto child: adjList[cur]){
+                    if(visited.count(child)) continue;
+
+                    q.push(child);
+                    visited.insert(child);
+                }
+            }
+            dist++;
+        }
+        return dist-1;
+
+    }
+
+    void helper(TreeNode * root, int start){
+        if(!root) return;
+
+        if(root->val == start) start_ptr = root;
+
+        if(root->left){
+            adjList[root].push_back(root->left);
+            adjList[root->left].push_back(root);
+            helper(root->left, start);
+        }
+        if(root->right){
+            adjList[root].push_back(root->right);
+            adjList[root->right].push_back(root);
+            helper(root->right, start);
+        }
+    }
+};
