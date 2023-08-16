@@ -1,0 +1,22 @@
+
+// 1578. Minimum Time to Make Rope Colorful
+
+class Solution {
+public:
+    int minCost(string colors, vector<int>& neededTime) {
+        int curMax = 0, curSum = 0, cost = 0;
+
+        for(int i=0; i<colors.size(); i++){
+            if(i>0 && colors[i] == colors[i-1]){
+                curSum += neededTime[i];
+                curMax = max(curMax, neededTime[i]);
+            }
+            else{
+                cost += (curSum - curMax);
+                curSum = neededTime[i];
+                curMax = neededTime[i];
+            }
+        }
+        return cost + curSum - curMax;
+    }
+};
