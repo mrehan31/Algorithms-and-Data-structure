@@ -1,0 +1,19 @@
+// 2728. Count Houses in a Circular Street
+ 
+class Solution {
+public:
+    int houseCount(Street* street, int k) {
+        for(int i=0; i<k; i++){
+            if(street->isDoorOpen())  street->closeDoor();
+            street->moveRight();
+        }
+
+        int count = 0;
+        while(!street->isDoorOpen()){
+            count++;
+            street->openDoor();
+            street->moveRight();
+        }
+        return count;
+    }
+};
