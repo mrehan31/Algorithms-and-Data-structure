@@ -1,0 +1,26 @@
+// 2128. Remove All Ones With Row and Column Flips
+
+class Solution {
+public:
+    bool removeOnes(vector<vector<int>>& grid) {
+
+        for(int i=1; i<grid.size(); i++){
+            int same = true, opp = true;
+            for(int j=0; j<grid[0].size(); j++){
+                if(grid[0][j] != grid[i][j]){
+                    same = false;
+                    break;
+                }
+            }
+
+            for(int j=0; j<grid[0].size(); j++){
+                if(grid[0][j] == grid[i][j]){
+                    opp = false;
+                    break;
+                }
+            }
+            if(!same && !opp)   return false;
+        }
+        return true;
+    }
+};
