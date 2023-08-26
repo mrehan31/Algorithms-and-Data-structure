@@ -1,0 +1,25 @@
+// 809. Expressive Words
+
+class Solution {
+public:
+    int expressiveWords(string s, vector<string>& words) {
+        int count = 0;
+
+        for(string & word: words){
+            if(check(s, word))  count++;
+        }
+        return count;
+    }
+
+    bool check(string s, string w){
+        int i=0, j = 0, m = s.size(), n = w.size();
+
+        for(int i2=0, j2=0; i<m && j<n; i = i2, j = j2){
+            if(s[i] != w[j])    return false;
+            while(i2<m && s[i2] == s[i])    i2++;
+            while(j2<n && w[j2] == w[j])    j2++;
+            if((i2-i) != (j2 - j) && (i2-i) < max(3, j2 - j)) return false;
+        }
+        return i == m && j == n;
+    }
+};
