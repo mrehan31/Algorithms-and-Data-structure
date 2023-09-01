@@ -1,0 +1,33 @@
+// 2007. Find Original Array From Doubled Array
+
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& changed) {
+        map<int, int> map;
+        vector<int> result;
+        int count = changed.size();
+        if(count%2) return {};
+        count = count/2;
+
+        for(int n:changed)  map[n]++;
+
+        for(auto it:map){
+            int cur = it.first;
+            if(it.second <= 0)  continue;
+            
+            while(map[cur]){
+                map[cur]--;
+
+                result.push_back(cur);
+                count--;
+
+                if(map[cur*2] != 0)
+                    map[cur*2]--;
+                else
+                    return {};
+                if(count == 0)  break;
+            }
+        }
+        return result;
+    }
+};
