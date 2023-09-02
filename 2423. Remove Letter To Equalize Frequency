@@ -1,0 +1,26 @@
+// 2423. Remove Letter To Equalize Frequency
+
+class Solution {
+public:
+    bool equalFrequency(string word) {
+        unordered_map<char, int> umap;
+        
+
+        for(char ch: word)  umap[ch]++;
+
+        for(char ch: word){
+            unordered_map<int, int> freqDist;
+
+            umap[ch]--;
+
+            for(auto it:umap){   
+                if(it.second != 0)  freqDist[it.second]++;
+            }
+
+            if(freqDist.size() == 1)    return true;
+            umap[ch]++;
+        }
+        
+        return false;
+    }
+};
