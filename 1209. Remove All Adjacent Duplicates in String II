@@ -1,0 +1,29 @@
+// 1209. Remove All Adjacent Duplicates in String II
+
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        stack<pair<char, int>> stk;
+
+        for(char ch: s){
+            if(!stk.empty() && stk.top().first == ch){
+                stk.top().second++;
+                if(stk.top().second == k) stk.pop();
+            }
+            else{
+                stk.push({ch, 1});
+            }
+        }
+        string result = "";
+        while(!stk.empty()){
+            string substr = "";
+            char ch = stk.top().first;
+            int count = stk.top().second;
+            stk.pop();
+
+            while(count--) substr += ch;
+            result = substr + result;
+        }
+        return result;
+    }
+};
