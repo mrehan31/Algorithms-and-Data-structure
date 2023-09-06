@@ -1,0 +1,30 @@
+// 1314. Matrix Block Sum
+
+class Solution {
+public:
+    vector<vector<int>> matrixBlockSum(vector<vector<int>>& mat, int k) {
+        int m = mat.size(), n = mat[0].size();
+        vector<vector<int>> res (m, vector<int>(n, 0));
+
+        vector<vector<int>> sum(m+1, vector<int>(n+1, 0));
+
+        for(int i=1; i<=m; i++){
+            for(int j=1; j<=n; j++){
+                sum[i][j] = mat[i-1][j-1] + sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1];
+            }
+        }
+
+        for(int i=1; i<=m; i++){
+            for(int j=1; j<=n; j++){
+                int top, bot, right, left;
+                top = i-k > 0? i-k:1;
+                bot = i+k <= m? i+k: m;
+                left = j-k > 0? j-k: 1;
+                right = j+k <=n? j+k: n;
+
+                res[i-1][j-1] = sum[bot][right] - sum[top-1][right] - sum[bot][left-1] + sum[top-1][left-1];
+            }
+        }
+        return res;
+    }
+};
