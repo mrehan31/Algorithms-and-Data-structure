@@ -1,0 +1,25 @@
+// 138. Copy List with Random Pointer
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        unordered_map<Node*, Node*> map;
+
+        Node * h = head;
+
+        while(h){
+            map[h] = new Node(h->val);
+            h = h->next;
+        }
+
+        h = head;
+
+        while(h){
+            Node* newNode = map[h];
+            newNode->next = map[h->next];
+            newNode->random = map[h->random];
+            h = h->next;
+        }
+        return map[head];
+    }
+};
