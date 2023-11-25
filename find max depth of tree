@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root)   return 0;
+        stack<pair<TreeNode*, int>> stk;
+        int h = 1;
+
+        stk.push({root, 1});
+
+        while(!stk.empty()){
+            auto cur = stk.top();
+            stk.pop();
+
+            h = max(h, cur.second);
+            if(cur.first->left)     stk.push({cur.first->left, cur.second+1});
+            if(cur.first->right)    stk.push({cur.first->right, cur.second+1});
+        }
+        return h;
+    }
+};
