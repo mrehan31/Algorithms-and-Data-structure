@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string nextClosestTime(string time) {
+        string s = time.substr(0, 2) + time.substr(3, 2);
+
+        sort(s.begin(), s.end());
+
+        for(int i=time.size()-1; i>=0; i--){
+            if(time[i] == ':')  continue;
+
+            auto it = upper_bound(s.begin(), s.end(), time[i]);
+            if(it != s.end()){
+                time[i] = *it;
+                if(stoi(time.substr(0, 2)) <24 && stoi(time.substr(3, 2)) < 60) return time;
+            }
+            time[i] = s[0];
+        }
+        return time;
+    }
+};
