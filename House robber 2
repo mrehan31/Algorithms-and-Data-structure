@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size() == 0)    return 0;
+        if(nums.size() == 1)    return nums[0];
+
+        int option1 = robHouse(nums, 0, nums.size()-2);
+        int option2 = robHouse(nums, 1, nums.size()-1);
+        return max(option1, option2);
+    }
+    int robHouse(vector<int>&nums, int i, int j){
+        if(i == j)  return nums[i];
+
+        int t2 = nums[i];
+        int t1 = max(nums[i], nums[i+1]);
+
+        int k = i+2;
+
+        int cur = 0;
+        while(k<=j){
+            cur = max(nums[k] + t2, t1);
+            k++;
+            t2 = t1;
+            t1 = cur;
+        }
+        return t1;
+    }
+};
