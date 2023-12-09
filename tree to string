@@ -1,0 +1,28 @@
+class Solution {
+    string result = "";
+public:
+    string tree2str(TreeNode* root) {
+        dfs(root);
+        return result;        
+    }
+    void dfs(TreeNode * root){
+        if(!root)    return;
+
+        result += to_string(root->val);
+
+        if(!root->left && !root->right){
+            return;
+        }
+        
+        if(root->left || root->right){
+            result += "(";
+            dfs(root->left);
+            result += ")";
+        }
+        if(root->right){
+            result += "(";
+            dfs(root->right);
+            result += ")";
+        }
+    }
+};
