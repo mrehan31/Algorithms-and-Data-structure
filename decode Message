@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string decodeMessage(string key, string message) {
+        unordered_map<char, char> map;
+        char cur = 'a';
+
+        for(char ch: key){
+            if(ch == ' ' || map.count(ch))   continue;
+
+            map[ch] = cur;
+            cur++;
+        }
+        string res = "";
+
+        for(char ch: message){
+            if(ch == ' '){
+                res += ' ';
+                continue;
+            }
+            res += map[ch];
+        }
+        return res;
+    }
+};
