@@ -1,0 +1,28 @@
+Int findClosestVal(Node* root, int target){
+	if(!root)	return -1;
+
+	Int prevClosestVal = 1e9;
+
+	findClosestRec(root, target, prevClosestVal);
+	return prevClosestVal;
+}
+
+Void findClosestRec(Node * root, int target, int &prevClosestVal){
+	if(!root) return;
+
+	if(root->val == target){
+		prevClosestVal = root->val;
+		return;
+	}
+
+	Int prevDiff = abs(prevClosestVal - target);
+	Int curDiff = abs(root->val - target);
+
+	if(curDiff < prevDiff)	prevClosestVal = root->val;
+	
+	if(root->val < target)	findClosestRec(root->right, target, prevClosestVal);
+	else	findClosestRec(root->left, target, prevClosestVal);
+}
+
+//TC:  O(N)
+// SC: O(H)                 worst case H->N
