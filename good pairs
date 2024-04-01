@@ -1,0 +1,19 @@
+
+using namespace std;
+
+class Solution {
+  public:
+    int numGoodPairs(std::vector<int>& nums) {
+      int countGoodPairs = 0;
+
+      unordered_map<int, int> mapOfVisitedNos;
+
+      for(int num: nums){
+        if(mapOfVisitedNos.count(num))
+          countGoodPairs += mapOfVisitedNos[num];
+
+        mapOfVisitedNos[num]++;
+      }
+      return countGoodPairs;
+    }
+};
