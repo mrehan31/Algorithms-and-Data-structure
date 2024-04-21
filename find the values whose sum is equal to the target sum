@@ -1,0 +1,34 @@
+using namespace std;
+
+#include <iostream>
+#include <vector>
+
+class Solution {
+
+  public:
+
+  static vector<int> search(const vector<int> &arr, int targetSum) {
+    // TODO: Write your code here
+    int left = 0, right = arr.size()-1;
+
+    vector<int> retVal(2 , -1);
+
+    while(left < right){
+      int curSum = arr[left] + arr[right];
+
+      if(curSum == targetSum){
+        retVal[0] = left;
+        retVal[1] = right;
+        return retVal;
+      }
+
+      if(curSum < targetSum) 
+        left++;
+      else  
+        right--;
+    }
+    return retVal;
+
+  }
+
+};
