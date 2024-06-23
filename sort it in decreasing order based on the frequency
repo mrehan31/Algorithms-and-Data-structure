@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> freqMap;
+
+        for(char ch: s) freqMap[ch]++;
+        priority_queue<pair<int, char>> maxHeap;
+
+        for(auto [ch, count]: freqMap){
+            maxHeap.push({count, ch});
+        }
+        string result = "";
+
+        while(!maxHeap.empty()){
+            auto it = maxHeap.top();
+            maxHeap.pop();
+
+            int count = it.first;
+            char ch = it.second;
+
+            while(count--){
+                result += ch;
+            }
+        }
+        return result;
+    }
+};
