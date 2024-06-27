@@ -1,0 +1,22 @@
+class Solution {
+public:
+    long long largestPerimeter(vector<int>& nums) {
+        long long sumOfSides = 0;
+
+        for(int num: nums)  sumOfSides += num;
+
+        sort(nums.begin(), nums.end());
+
+        for(int i=nums.size()-1; i>=0; i--){
+            long long sumOfRemainingSides = sumOfSides - nums[i];
+            if(nums[i] < sumOfRemainingSides){
+                if(i >= 2)
+                    return sumOfSides;
+                else    
+                    return -1;
+            }
+            sumOfSides = sumOfRemainingSides;
+        }
+        return -1;
+    }
+};
