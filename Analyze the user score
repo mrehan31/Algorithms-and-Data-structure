@@ -1,0 +1,52 @@
+class Solution {
+    
+    void triplets(vector<pair<int, string>>&history, unordered_set<string> &patterns){
+
+        int n = history.size();
+        
+        for(int i=0; i<n-2; ++i){
+            for(int j = i+1; j<n-1; ++j){
+                for(int k = j+1; k<n; ++k){
+                    auto pattern = history[i].second + '@' + history[j].second + '#' + history[k].second;
+                    patterns.insert(pattern);
+                }
+            }
+        }
+    }
+
+public:
+    vector<string> mostVisitedPattern(vector<string>& username, vector<int>& timestamp, vector<string>& website) {
+        
+        unordered_map<string, vector<pair<int, string>>> data;// username: {timestamp, website}
+        unordered_map<string, int> scores;// pattern: score
+        string patternWithMaxScore="";
+        int maxScore = 0;
+
+        for(int i=0; i<username.size(); i++){
+            data[username[i]].push_back({timestamp[i], website[i]});
+        }
+
+        for(auto& [usrName, history]: data){
+            unordered_set<string> patterns;
+            sort(history.begin(), history.end());
+
+            triplets(history, patterns);
+
+            for(auto &pattern: patterns){
+                scores[pattern]++;
+            }
+
+            for(auto &[curPattern, curScore]: scores){
+                if(curScore > maxScore || (curScore == maxScore && curPattern < patternWithMaxScore)){
+                    patternWithMaxScore = curPattern;
+                    maxScore = curScore;
+                }
+            }
+        }
+        auto endOfWebsite1 = patternWithMaxScore.find('@');
+        auto endOfWebsite2 = patternWithMaxScore.find('#');
+
+        auto result = {patternWithMaxScore.substr(0, endOfWebsite1), patternWithMaxScore.substr(endOfWebsite1+1, endOfWebsite2 - endOfWebsite1-1), patternWithMaxScore.substr(endOfWebsite2+1)};
+        return result;
+    }
+};
