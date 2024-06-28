@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minimumKeypresses(string s) {
+
+        unordered_map<char, int> freqMap;
+        for(char ch: s) freqMap[ch]++;
+
+        sort(s.begin(), s.end(), [&](char &a, char &b){return freqMap[a] > freqMap[b];});
+
+        vector<int> keyMap(26, -1);
+        int curKey = 1;
+
+        int countPresses = 0;
+        unordered_set<char> visited;
+        
+        for(char ch: s){
+            if(keyMap[ch - 'a'] == -1){
+                visited.insert(ch);
+                keyMap[ch - 'a'] = (visited.size()-1)/9 + 1;
+            }
+            countPresses += (keyMap[ch - 'a']);
+        }
+        return countPresses;
+    }
+};
