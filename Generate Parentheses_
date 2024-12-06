@@ -1,0 +1,30 @@
+// 22. Generate Parentheses
+
+class Solution {
+public:
+
+    void helper(int n, int openedPar, int closedPar, string &curComb, vector<string>& result){
+        if( openedPar == n && closedPar == n){
+            result.push_back(curComb);
+            return;
+        }
+
+        if(openedPar < n){
+            curComb.push_back('(');
+            helper(n, openedPar+1, closedPar, curComb, result);
+            curComb.pop_back();
+        }
+        if(closedPar < openedPar){
+            curComb.push_back(')');
+            helper(n, openedPar, closedPar+1, curComb, result);
+            curComb.pop_back();
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        string curComb = "";
+
+        helper(n, 0, 0, curComb, result);
+        return result;
+    }
+};
