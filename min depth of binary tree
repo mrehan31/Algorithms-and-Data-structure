@@ -1,0 +1,42 @@
+using namespace std;
+
+#include <iostream>
+#include <queue>
+
+/*class TreeNode {
+public:
+  int val = 0;
+  TreeNode *left;
+  TreeNode *right;
+
+  TreeNode(int x) {
+    val = x;
+    left = right = nullptr;
+  }
+};*/
+
+class Solution {
+public:
+  int findDepth(TreeNode *root) {
+    int minDepth = 0;
+    queue<TreeNode*> queue;
+    if(!root) return 0;
+
+    queue.push(root);
+    while(!queue.empty()){
+      int size = queue.size();
+      minDepth++;
+
+      for(int i=0; i< size; i++){
+        TreeNode *curNode = queue.front();
+        queue.pop();
+
+        if(!curNode->left && !curNode->right){
+          return minDepth;
+        }
+        if(curNode->left)   queue.push(curNode->left);
+        if(curNode->right)  queue.push(curNode->right);
+      }
+    }
+  }
+};
