@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> findMissingRanges(vector<int>& nums, int lower, int upper) {
+        vector<vector<int>> result;
+        if(nums.size() == 0){
+            result.push_back({lower, upper});
+            return result;
+        } 
+
+        sort(nums.begin(), nums.end());
+
+        if(nums[0] > lower){
+            result.push_back({lower, nums[0]-1});
+        }
+
+        for(int i=1; i< nums.size(); i++){
+            if(nums[i] > upper) break;
+            
+            if(nums[i] - nums[i-1] > 1) result.push_back({nums[i-1] + 1, nums[i] - 1});
+        }
+        if(upper > nums.back()) result.push_back({nums.back()+1, upper}); 
+        return result;
+    }
+};
