@@ -1,0 +1,16 @@
+public:
+    // Function to transform the array into its rank form
+    vector<int> arrayRankTransform(vector<int>& arr) {
+        sort(arr.begin(), arr.end());
+        int prevNo = arr[0];
+        arr[0] = 1;
+
+        for(int i=1; i<arr.size(); i++){
+            int temp = arr[i];
+            arr[i] = arr[i] == prevNo? arr[i-1]: arr[i-1] + 1;
+            prevNo = temp;
+        }
+        return arr;
+    }
+
+   };
