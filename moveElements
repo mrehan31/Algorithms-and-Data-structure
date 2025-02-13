@@ -1,0 +1,18 @@
+class Solution {
+public:
+  int moveElements(vector<int> &arr) {
+    int left = 1, right = 1;
+    while(right < arr.size()){
+      if(arr[right] == arr[right - 1]){
+        right++;
+      }
+      else{
+        arr[left] = arr[right];
+        left++;
+        right++;
+      }
+    }
+
+    return left;
+  }
+};
