@@ -1,0 +1,28 @@
+class Solution {
+    bool ifPalindrome(string&s, int left, int right){
+        while(left < right){
+            if(s[left] == s[right]){
+                left++;
+                right--;
+            }
+            else return false;
+        }
+        return true;
+    }
+public:
+    bool validPalindrome(string s) {
+
+        int left = 0, right = s.size() - 1;
+
+        while(left < right){
+            if(s[left] == s[right]){
+                left++;
+                right--;
+            }
+            else{
+                return ifPalindrome(s, left+1, right) || ifPalindrome(s, left, right - 1);
+            }
+        }
+        return true;
+    }
+};
