@@ -1,0 +1,22 @@
+class Solution {
+    void inorderTraversal(TreeNode* root, int& k, int& result){
+        if(!root)   return;
+        inorderTraversal(root->left, k, result);
+        k--;
+        if(k == 0){
+            result = root->val;
+            return;
+        }
+        inorderTraversal(root->right, k, result);
+    }
+public:
+    int kthSmallest(TreeNode* root, int k) {
+
+        int result;
+        inorderTraversal(root, k, result);
+        return result;
+    }
+};
+
+// Time complexity: for balanced tree O(log N + k), for unbalanced tree: O(N + k)
+// Space complexity: O(H) -> O(N)
