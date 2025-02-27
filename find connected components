@@ -1,0 +1,53 @@
+class UnionFind{
+    int n;
+    vector<int> rank, parent;
+public:
+    UnionFind(int n): n(n), rank(n, 1), parent(n){
+        for(int i=0; i<n; i++){
+            parent[i] = i;
+        }
+    }
+    int find(int x){
+        if(parent[x] == x)  return x;
+        return parent[x] = find(parent[x]);
+    }
+    void unionFind(int x, int y){
+        int rootX = find(x);
+        int rootY = find(y);
+
+        if(rootX == rootY)  return;
+
+        if(rank[rootX] < rank[rootY])
+            parent[rootX] = rootY;
+        else if(rank[rootX] > rank[rootY])
+            parent[rootY] = rootX;
+        else{
+            parent[rootX] = rootY;
+            rank[rootY]++;
+        }
+    }
+    int findDistinctRoots(){
+        int count = 0;
+        for(int i=0; i<parent.size(); i++){
+            if(i == parent[i])  count++;
+        }
+        return count;
+    }
+};
+
+class Solution {
+public:
+    // Function to find the province count.
+    int findProvinces(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+
+        UnionFind uf = UnionFind(n);
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                if(isConnected[i][j])   uf.unionFind(i, j);
+            }
+        }
+        
+        return uf.findDistinctRoots();
+    }
+};
