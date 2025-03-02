@@ -1,0 +1,33 @@
+class Solution {
+    void dfs(Node *node, unordered_map<Node*, Node*>&map){
+        Node* new_node = new Node(node->val);
+        map[node] = new_node;
+
+        for(auto &neigh: node->neighbors){
+            if(map.count(neigh) == 0){
+                dfs(neigh, map);
+            }
+        }
+    }
+    void connectNodes(Node*node, unordered_map<Node*, Node*>&map, unordered_set<Node*>&visited){
+        visited.insert(node);
+        for(Node* neigh: node->neighbors){
+            map[node]->neighbors.push_back(map[neigh]);
+            if(visited.count(neigh) == 0){
+                connectNodes(neigh, map, visited);
+            }
+        }
+    }
+public:
+    Node* cloneGraph(Node* node) {
+         if(!node)   return nullptr;
+
+        unordered_map<Node*, Node*> map;
+
+        dfs(node, map);
+
+        unordered_set<Node*> visited;
+        connectNodes(node, map, visited);
+        return map[node];
+    }
+};
