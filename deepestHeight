@@ -1,0 +1,24 @@
+class Solution {
+    int deepestHeight = 0;
+    TreeNode *result;
+    int helper(TreeNode* root, int height){
+        if(!root)   return height;
+
+        int leftHeight = helper(root->left, height + 1);
+        int rightHeight = helper(root->right, height + 1);
+
+        int curHeight = max(leftHeight, rightHeight);
+        if(curHeight > deepestHeight){
+            deepestHeight = curHeight;
+        }
+        if(leftHeight == deepestHeight && rightHeight == deepestHeight)
+            result = root;
+        
+        return max(leftHeight, rightHeight);
+    }
+public:
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        helper(root, 0);
+        return result;
+    }
+};
