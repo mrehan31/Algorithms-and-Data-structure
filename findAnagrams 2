@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> map_s(26, 0), ref_map(26, 0);
+
+        if(p.size() > s.size()) return vector<int>();
+        for(char ch: p) ref_map[ch - 'a']++;
+
+        int left = 0, right = 0;
+        vector<int> result;
+
+        while(right < s.size()){
+            map_s[s[right] - 'a']++;
+            if(right - left + 1 > p.size()){
+                map_s[s[left] - 'a']--;
+                left++;
+            }
+            if(right - left + 1 == p.size() && ref_map == map_s){
+                result.push_back(left);
+            }
+            right++;
+        }
+        return result;
+    }
+};
