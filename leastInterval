@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        unordered_map<char, int> freqMap;
+
+        for(char task: tasks)   freqMap[task]++;
+
+        priority_queue<int> maxHeap;
+
+        for(auto& it:freqMap){
+            maxHeap.push(it.second);
+        }
+        int times = 0;
+        while(!maxHeap.empty()){
+            int cycle = n + 1;
+            vector<int> store;
+            int taskCount = 0;
+
+            while(cycle && !maxHeap.empty()){
+                int curCount = maxHeap.top();
+                maxHeap.pop();
+                
+                if(curCount > 1){
+                    store.push_back(curCount - 1);
+                }
+                taskCount++;
+                cycle--;
+            }
+            for(int freq: store){
+                maxHeap.push(freq);
+            }
+
+            times += maxHeap.empty()?taskCount: n + 1;
+        }
+        return times;
+    }
+
+};
