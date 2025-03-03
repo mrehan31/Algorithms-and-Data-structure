@@ -1,0 +1,17 @@
+    void helper(TreeNode* root, int &closest_val, double target){
+        if(!root)   return;
+
+        if(abs(target - root->val) < abs(target - closest_val) || (abs(target - root->val) == abs(target - closest_val) && root->val < closest_val))
+        closest_val = root->val;
+        
+        
+        helper(root->left, closest_val, target);
+        helper(root->right, closest_val, target);
+    }
+public:
+    int closestValue(TreeNode* root, double target) {
+        int closest_val = root->val; 
+        helper(root, closest_val, target);
+        return closest_val;
+    }
+};
