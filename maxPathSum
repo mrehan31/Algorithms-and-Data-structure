@@ -1,0 +1,20 @@
+class Solution {
+    int helper(TreeNode* root, int &maxPathSum){
+        if(!root)   return 0;
+
+        int left_ret = max(helper(root->left, maxPathSum), 0);
+        int right_ret = max(helper(root->right, maxPathSum), 0);
+
+        maxPathSum = max(maxPathSum, root->val + left_ret + right_ret);
+
+        return root->val + max(left_ret, right_ret);
+    }
+    
+public:
+    int maxPathSum(TreeNode* root) {
+        int maxPathSum = INT_MIN;
+
+        helper(root, maxPathSum);
+        return maxPathSum; 
+    }
+};
