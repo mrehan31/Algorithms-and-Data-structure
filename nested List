@@ -1,0 +1,19 @@
+class Solution {
+    int helper(vector<NestedInteger>& nestedList, int depth){
+        int total = 0;
+
+        for(NestedInteger& list: nestedList){
+            if(list.isInteger()){
+                total += depth *list.getInteger();
+            }
+            else{
+                total += helper(list.getList(), depth+1);
+            }
+        }
+        return total;
+    }
+public:
+    int depthSum(vector<NestedInteger>& nestedList) {
+        return helper(nestedList, 1);
+    }
+};
