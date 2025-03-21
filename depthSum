@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int depthSum(vector<NestedInteger>& nestedList) {
+        queue<NestedInteger> queue;
+        for(NestedInteger list: nestedList){
+            queue.push(list);
+        }
+        int total = 0;
+        int level = 1;
+
+        while(!queue.empty()){
+            int qSize = queue.size();
+            for(int i=0; i<qSize; i++){
+                NestedInteger curList = queue.front();
+                queue.pop();
+
+                if(curList.isInteger()){
+                    total += level*curList.getInteger();
+                }
+                else{
+                    for(NestedInteger& nexLevelList: curList.getList()){
+                        queue.push(nexLevelList);
+                    }
+                }
+            }
+            level++;
+        }
+        return total;
+    }
+};
