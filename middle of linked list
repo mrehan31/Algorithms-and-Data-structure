@@ -1,0 +1,13 @@
+class Solution {
+public:
+  ListNode *findMiddle(ListNode *head) {
+    ListNode *slow = head; // Initialize slow pointer to head of the list
+    ListNode *fast = head; // Initialize fast pointer to head of the list
+    while (fast != nullptr && fast->next != nullptr) { // Iterate through the list until the fast pointer reaches the end or nullptr
+      slow = slow->next; // Move slow pointer one step
+      fast = fast->next->next; // Move fast pointer two steps
+    }
+
+    return slow; // Return the middle node
+  }
+};
