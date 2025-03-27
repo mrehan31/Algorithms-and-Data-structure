@@ -1,0 +1,27 @@
+class Solution {
+  void find2Sum(vector<int>&arr, int left, int& minDiff, int& minSum, int& targetSum, int i){
+    int right = arr.size() - 1;
+
+    while(left < right){
+      int curSum = arr[left] + arr[right] + arr[i];
+      int curDiff = abs(curSum - targetSum);
+      if(curDiff < minDiff || (curDiff == minDiff && curSum < minSum)){
+        minDiff = curDiff;
+        minSum = curSum;
+      }
+      if(curSum < targetSum)  left++;
+      else right--;
+    }
+  }
+public:
+  int searchTriplet(vector<int>& arr, int targetSum) {
+    int minDiff = INT_MAX, minSum;
+    
+    sort(arr.begin(), arr.end());
+
+    for(int i=0; i<arr.size(); i++){
+      find2Sum(arr, i+1, minDiff, minSum, targetSum, i);
+    }
+    return minSum;
+  }
+};
