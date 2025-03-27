@@ -1,0 +1,15 @@
+class Solution {
+public:
+  bool hasCycle(ListNode *head) {
+    ListNode *slow = head; // Initialize slow pointer to head
+    ListNode *fast = head; // Initialize fast pointer to head
+    while (fast != nullptr && fast->next != nullptr) { // Traverse the linked list until fast or fast->next becomes null
+      fast = fast->next->next; // Move fast pointer two steps ahead
+      slow = slow->next; // Move slow pointer one step ahead
+      if (slow == fast) {
+        return true;  // If slow and fast pointers meet, a cycle is detected
+      }
+    }
+    return false; // If loop completes, no cycle is found
+  }
+};
