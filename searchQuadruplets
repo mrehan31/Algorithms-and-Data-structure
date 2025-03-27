@@ -1,0 +1,45 @@
+class Solution {
+  static void find2Sum(int i, int j, vector<int> &arr, int target, vector<vector<int>>& result){
+    int start = j+1, end = arr.size()-1;
+    
+    cout<<"find2Sum() was called!"<< endl;
+    cout<<"i: "<< i<< ", j: "<< j<< endl;
+
+    while(start < end){
+      int curSum = arr[start] + arr[end];
+      if(curSum == target){
+        result.push_back({arr[i], arr[j], arr[start], arr[end]});
+        start++;
+        end--;
+        while(start < arr.size() && arr[start-1] == arr[start]) start++;
+        while(end > start && arr[end] == arr[end+1])  end--;
+      }
+      else{
+        if(curSum < target){
+          start++;
+        }
+        else{
+          end--;
+        }
+      }
+    }
+  }
+public:
+  static vector<vector<int>> searchQuadruplets(vector<int> &arr, int target) {
+    vector<vector<int>> quadruplets;
+    sort(arr.begin(), arr.end());
+    int i = 0, j = 0;
+    while(i<arr.size()){
+      j = i + 1;
+      while(j<arr.size()){
+        find2Sum(i, j, arr, target - arr[i] - arr[j], quadruplets);
+        j++;
+        while(j<arr.size() && arr[j-1] == arr[j]) j++;
+      }
+      i++;
+      while(i<arr.size() && arr[i-1] == arr[i]) i++;
+    }
+    
+    return quadruplets;
+  }
+};
