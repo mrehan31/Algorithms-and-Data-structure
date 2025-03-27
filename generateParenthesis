@@ -1,0 +1,25 @@
+class Solution {
+    void helper(int openPar, int closingPar, string& curComb, vector<string>& result, int n){
+        if(curComb.size() == 2*n){
+            result.push_back(curComb);
+            return;
+        }
+        if(openPar > 0){
+            curComb += '(';
+            helper(openPar-1, closingPar, curComb, result, n);
+            curComb.pop_back();
+        }
+        if(closingPar > openPar){
+            curComb += ')';
+            helper(openPar, closingPar - 1, curComb, result, n);
+            curComb.pop_back();
+        }
+    }
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        string curComb = "";
+        helper(n, n, curComb, result, n);
+        return result;
+    } 
+};
