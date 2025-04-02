@@ -1,0 +1,31 @@
+class Solution {
+  int findNext(const vector<int>& arr, int curIndex, bool isForward){
+    bool direction = arr[curIndex] >= 0;
+    if(isForward != direction)  return -1;
+
+    int nextIndex = (curIndex + arr[curIndex]) % arr.size();
+    if(nextIndex < 0) nextIndex += arr.size();
+
+    if(curIndex == nextIndex) return -1;
+    return nextIndex;
+  }
+public:
+  bool loopExists(const vector<int> &arr) {
+    for(int i=0; i<arr.size(); i++){
+      bool isForward = arr[i] >= 0;
+
+      int slow = i, fast = i;
+
+      do{
+        slow = findNext(arr, slow, isForward);
+        fast = findNext(arr, fast, isForward);
+        if(fast != -1){
+          fast = findNext(arr, fast, isForward);
+        }
+      }while(slow != -1 && fast != -1 && slow != fast);
+
+      if(slow != -1 && slow == fast)  return true;
+    }
+    return false;
+  }
+};
