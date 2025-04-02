@@ -1,0 +1,21 @@
+class Solution
+{
+public:
+    int findLength(const vector<char> &arr)
+    {
+        unordered_map<char, int> map;
+        int start = 0, end = 0, maxLen = 0;
+        while(end<arr.size()){
+            map[arr[end]]++;
+
+            while(map.size()>2){
+                map[arr[start]]--;
+                if(map[arr[start]] == 0) map.erase(arr[start]);
+                start++;
+            }
+            maxLen = max(maxLen, end - start + 1);
+            end++;
+        }
+        return maxLen;
+    }
+};
