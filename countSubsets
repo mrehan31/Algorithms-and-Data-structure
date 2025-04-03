@@ -1,0 +1,14 @@
+class Solution {
+  int helper(const vector<int>&nums, int i, int sum, vector<vector<int>>&memo){
+    if(sum == 0){
+      return 1;
+    }
+    if(i >= nums.size() || sum < 0)  return 0;
+    if(memo[i][sum] != -1)  return memo[i][sum];
+    return memo[i][sum] = helper(nums, i+1, sum-nums[i], memo) + helper(nums, i+1, sum, memo);
+  }
+public:
+  int countSubsets(const vector<int> &nums, int sum) {
+    vector<vector<int>> memo(nums.size(), vector<int>(sum+1, -1));
+    return helper(nums, 0, sum, memo);
+  }
