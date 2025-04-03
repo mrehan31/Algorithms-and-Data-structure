@@ -1,0 +1,23 @@
+class Solution {
+  bool helper(const vector<int>&nums, int targetSum, int i, vector<vector<int>>&memo){
+    if(targetSum == 0)  return true;
+    if(i >= nums.size() || targetSum<0) return false;
+
+    if(memo[i][targetSum] != -1)  return memo[i][targetSum];
+    
+    return memo[i][targetSum] = helper(nums, targetSum-nums[i], i+1, memo) || helper(nums, targetSum, i+1, memo);
+  }
+public:
+  bool canPartition(const vector<int> &nums) {
+    int sum = 0;
+    for(int num: nums){
+      sum += num;
+    }
+    if(sum%2 == 1)  return false;
+    int targetSum = sum/2;
+
+    vector<vector<int>> memo(nums.size(), vector<int>(targetSum+1, -1));
+
+    return helper(nums, targetSum, 0, memo);
+  }
+};
