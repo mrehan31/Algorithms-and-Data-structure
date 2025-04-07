@@ -1,0 +1,35 @@
+class Solution {
+    void twoSum(vector<int>& nums, int left, int right, int target, vector<vector<int>>&result){
+        while(left<right){
+            int curSum = nums[left] + nums[right];
+            if(curSum == target){
+                result.push_back({-target, nums[left], nums[right]});
+                while(left<right && nums[left] == nums[left+1]) left++;
+                left++;
+                right--;
+            }
+            else{
+                if(curSum < target) left++;
+                else right--;
+            }
+        }
+    }
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> result;
+
+        int i = 0;
+
+        while(i<nums.size()-1){
+            int target = -nums[i];
+            twoSum(nums, i+1, nums.size()-1, target, result);
+            while(i<nums.size()-1 && nums[i] == nums[i+1]){
+                i++;
+            }
+            i++;
+
+        }
+        return result;
+    }
+};
