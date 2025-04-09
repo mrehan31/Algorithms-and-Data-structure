@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Solution
+{
+  void helper(vector<int>&candidates, int curIndex, vector<int>&curComb, int targetSum, vector<vector<int>>&result){
+    if(targetSum == 0){
+      result.push_back(curComb);
+      return;
+    }
+    if(curIndex >= candidates.size()|| targetSum < 0) return;
+
+    for(int i=curIndex; i<candidates.size(); i++){
+      curComb.push_back(candidates[i]);
+      helper(candidates, i,curComb, targetSum - candidates[i], result);
+      curComb.pop_back();
+    }
+  }
+public:
+  vector<vector<int>> combinationSum(vector<int> &candidates, int target)
+  {
+    vector<vector<int>> res;
+    vector<int> curComb;
+    helper(candidates, 0, curComb, target, res);
+    return res;
+  }
+};
