@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <climits>
+
+// TreeNode structure to represent the Binary Search Tree nodes.
+// struct TreeNode {
+//     int val;
+//     TreeNode* left;
+//     TreeNode* right;
+//     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// };
+
+class Solution {
+    void helper(TreeNode* root, int& minDiff, int &prevVal){
+        if(!root) return;
+
+        helper(root->left, minDiff, prevVal);
+        if(prevVal != INT_MAX)
+            minDiff = min(minDiff, abs(prevVal - root->val));
+        prevVal = root->val;
+
+        helper(root->right, minDiff, prevVal);
+    }
+private:
+ public:
+    int minDiffInBST(TreeNode* root) {
+        int minDiff = INT_MAX;
+        int prevVal = INT_MAX;
+        helper(root, minDiff, prevVal);
+        return minDiff;
+    }
+};
