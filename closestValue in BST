@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+
+// Define a TreeNode structure with left and right children.
+// struct TreeNode {
+//     int val;               // Value stored in the node.
+//     TreeNode* left;        // Reference to the left child.
+//     TreeNode* right;       // Reference to the right child.
+
+//     // Constructor to initialize a new node with a value.
+//     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// };
+
+class Solution {
+    void helper(TreeNode* root, double &target, int &closest_val){
+        if(root == nullptr) return;
+        double diff = root->val - target;
+        if(abs(diff) < abs(target - closest_val)){
+            closest_val = root->val;
+        }
+        if(diff > 0)    helper(root->left, target, closest_val);
+        if(diff < 0)    helper(root->right, target, closest_val);
+    }
+public:
+    int closestValue(TreeNode* root, double target) {
+        int closest_val = root->val;
+        helper(root, target, closest_val);
+        return closest_val;
+    }
+};
