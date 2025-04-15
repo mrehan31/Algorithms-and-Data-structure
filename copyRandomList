@@ -1,0 +1,30 @@
+class Solution {
+public:
+    Node* findNode(Node* oldNode, unordered_map<Node*, Node*>&map){
+        if(oldNode == nullptr)  return nullptr;
+
+        if(map.count(oldNode)){
+            return map[oldNode];
+        }
+        else{
+            Node *newNode = new Node(oldNode->val);
+            map[oldNode] = newNode;
+            return newNode;
+        }
+    }
+    Node* copyRandomList(Node* head) {
+        if(head == nullptr) return head;
+
+        unordered_map<Node*, Node*> map;
+
+        Node* oldNode = head;
+
+        while(oldNode){
+            Node *newNode = findNode(oldNode, map);
+            newNode->next = findNode(oldNode->next, map);
+            newNode->random = findNode(oldNode->random, map);
+            oldNode = oldNode->next;
+        }
+        return map[head];
+    }
+};
