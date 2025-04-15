@@ -1,0 +1,32 @@
+using namespace std;
+
+#include <iostream>
+#include <vector>
+
+class Solution {
+public:
+  vector<vector<int>> findSubsets(const vector<int>& nums) {
+    vector<vector<int>> subsets;
+    subsets.push_back(vector<int>());
+
+    for(int num:nums){
+      int n = subsets.size();
+
+      for(int i=0; i<n; i++){
+        vector<int>curSubset(subsets[i]);
+        curSubset.push_back(num);
+        subsets.push_back(curSubset);
+      }
+    }
+    return subsets;
+  }
+};    
+
+/*[1, 5, 3]
+
+[]
+[], [1]
+[], [1], [5], [1, 5], 
+[], [1], [5], [1, 5], [3], [1, 3], [5, 3], [1, 5, 3]
+*/
+
