@@ -1,0 +1,22 @@
+class Solution {
+    bool isBalance = true;
+    int findDepth(TreeNode* root){
+        if(!root || isBalance == false)   return 0;
+
+        int left_depth = findDepth(root->left);
+        int right_depth = findDepth(root->right);
+
+        if(abs(left_depth - right_depth) > 1) {
+            isBalance = false;
+        }
+        return 1 + max(left_depth, right_depth);
+    }
+public:
+    bool isBalanced(TreeNode* root) {
+        if(!root)   return true;
+
+        findDepth(root);
+
+        return isBalance;
+    }
+};
