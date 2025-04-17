@@ -1,0 +1,25 @@
+#include <queue>
+#include <vector>
+#include <iostream>
+#include <iomanip> // Include for std::fixed and std::setprecision
+
+class Solution {
+public:
+    int sum, size;
+    queue<int> que;
+    
+    Solution(int size):size(size), sum(0) {
+    }
+
+    // Method to add a new value and get the moving average
+    double next(int val) {
+        sum += val;
+        que.push(val);
+        if(que.size() > size){
+            int  curVal= que.front();
+            que.pop();
+            sum -= curVal;
+        }
+        return (1.0*sum)/(que.size());
+    }
+};
