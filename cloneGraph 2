@@ -1,0 +1,32 @@
+class Solution {
+    unordered_map<Node*, Node*> map;
+    Node* createNode(Node* oldNode){
+        if(map.count(oldNode))
+            return map[oldNode];
+        else{
+            Node * newNode = new Node(oldNode->val);
+            map[oldNode] = newNode;
+            return newNode;
+        }
+    }
+    void helper(Node* oldNode, unordered_set<Node*>&visited){
+        visited.insert(oldNode);
+
+        for(Node* neighbor: oldNode->neighbors){
+            map[oldNode]->neighbors.push_back(createNode(neighbor));
+
+            if(visited.count(neighbor) == 0)
+                helper(neighbor, visited);
+        }
+    }
+public:
+    Node* cloneGraph(Node* node) {
+        if(!node)   return nullptr;
+        unordered_set<Node*> visited;
+        
+        createNode(node);
+        helper(node, visited);
+        
+        return map[node];
+    }
+};
