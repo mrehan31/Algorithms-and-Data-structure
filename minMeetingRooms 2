@@ -1,0 +1,30 @@
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <iostream>
+
+class Solution {
+public:
+    int minMeetingRooms(std::vector<std::vector<int>>& intervals) {
+        unordered_map<int, int> map;
+        int minVal = INT_MAX, maxVal = 0;
+
+        for(auto interval:intervals){
+            int start = interval[0], end = interval[1];
+            map[start]++;
+            map[end]--;
+
+            minVal = min(start, minVal);
+            maxVal = max(end, maxVal);
+        }
+
+
+        int count = 0, maxCount = 0;
+
+        for(int i=minVal; i<=maxVal; i++){
+            count += map[i];
+            maxCount = max(maxCount, count);
+        }
+        return maxCount;
+    }
+};
