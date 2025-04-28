@@ -1,0 +1,19 @@
+class Solution {
+    void helper(TreeNode*root, int &result, int maxVal){
+        if(root == nullptr) return;
+
+        if(root->val >= maxVal) result++;
+
+        maxVal = max(maxVal, root->val);
+        helper(root->left, result, maxVal);
+        helper(root->right, result, maxVal);
+    }
+public:
+    int goodNodes(TreeNode* root) {
+        int result = 0;
+        if(root == nullptr) return result;
+
+        helper(root, result, root->val);
+        return result;
+    }
+};
