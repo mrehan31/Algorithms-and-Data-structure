@@ -1,0 +1,16 @@
+class Solution {
+public:
+    string maximumOddBinaryNumber(string s) {
+        int countOnes = 0;
+        for(char ch: s) countOnes += (ch == '1');
+        
+        int countZeros = s.size() - countOnes;
+
+        s = "";
+
+        while(countOnes-- > 1)    s += "1";
+        while(countZeros--) s += "0";
+
+        return s + '1';
+    }
+};
