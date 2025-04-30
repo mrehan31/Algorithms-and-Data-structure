@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int fib(int n) {
+       if(n <= 1) return n;
+
+       int fibnm1 = 1, fibnm2 = 0;
+
+       int result;
+       
+       for(int i=2; i<=n; i++){
+            result = fibnm1 + fibnm2;
+            fibnm2 = fibnm1;
+            fibnm1 = result;
+       }
+       return result;
+    }
+};
