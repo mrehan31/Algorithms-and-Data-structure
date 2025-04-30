@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        int p1 = num1.size()-1, p2 = num2.size()-1;
+
+        int carry = 0;
+
+        string sum = "";
+
+        while(p1 >= 0 || p2 >= 0 || carry != 0){
+            int dig1 = p1>=0 ? num1[p1--] - '0' : 0;
+            int dig2 = p2>=0 ? num2[p2--] - '0' : 0;
+
+            int sumOfdigits = dig1 + dig2 + carry;
+
+            char ch = sumOfdigits % 10;
+            carry = sumOfdigits/10;
+            sum +=  (ch + '0');
+        }
+        reverse(sum.begin(), sum.end());
+        return sum;
+    }
+};
