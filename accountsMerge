@@ -1,0 +1,44 @@
+class Solution {
+    unordered_set<string> visited;
+    unordered_map<string, vector<string>> adjacent;
+
+    void DFS(string& firstEmail, vector<string>&mergedAccount){
+        visited.insert(firstEmail);
+        mergedAccount.push_back(firstEmail);
+
+        for(string &neighbor: adjacent[firstEmail]){
+            if(visited.count(neighbor) == 0){
+                DFS(neighbor, mergedAccount);
+            }
+        }
+    }
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        int n = accounts.size();
+
+        for(auto &account: accounts){
+            int accountSize = account.size();
+
+            string accountFirstEmail = account[1];
+            for(int j=2; j<accountSize; j++){
+                string email = account[j];
+                adjacent[email].push_back(accountFirstEmail);
+                adjacent[accountFirstEmail].push_back(email);
+            }
+        }
+        vector<vector<string>> mergedAccounts;
+        for(auto &account:accounts){
+            string accountName = account[0];
+            string accountFirstEmail = account[1];
+
+            if(visited.count(accountFirstEmail) == 0){
+                vector<string> mergedAccount;
+                mergedAccount.push_back(accountName);
+                DFS(accountFirstEmail, mergedAccount);
+                sort(mergedAccount.begin()+1, mergedAccount.end());
+                mergedAccounts.push_back(mergedAccount);
+            }
+        }
+        return mergedAccounts;
+    }
+};
