@@ -1,0 +1,17 @@
+class Solution {
+public:
+    string maximumOddBinaryNumber(string s) {
+        int left = 0, right = 0;
+
+        while(right < s.size() && left < s.size()){
+            if(left <= right && s[right] == '1'){
+                swap(s[left], s[right]);
+                left++;
+            }
+            else
+                right++;
+        }
+        swap(s[left-1], s[s.size()-1]);
+        return s;
+    }
+};
