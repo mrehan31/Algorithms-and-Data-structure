@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string findCommonResponse(vector<vector<string>>& responses) {
+        string mostFreqWord = "";
+        int maxCount = 0;
+        unordered_map<string, int> map;
+
+        for(auto &response: responses){
+            unordered_set<string> curResp;
+            for(string word: response)    curResp.insert(word);
+
+            for(string word: curResp){            
+                map[word]++;
+                if(maxCount < map[word] || (maxCount == map[word] && word < mostFreqWord)){
+                    maxCount = map[word];
+                    mostFreqWord = word;
+                }
+            }
+        }
+        return mostFreqWord;
+    }
+};
