@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool evenDigits(int num){
+        return  (num>=1e1 && num <1e2) || 
+                (num>=1e3 && num <1e4) || 
+                (num == 1e5); 
+    }
+    int findNumbers(vector<int>& nums) {
+        int count = 0;
+
+        for(int num: nums){
+            if(evenDigits(num)) count++;
+        }
+        return count;
+    }
+};
