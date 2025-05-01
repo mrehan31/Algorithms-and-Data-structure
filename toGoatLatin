@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string toGoatLatin(string sentence) {
+        int n = sentence.size();
+        unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        int i = 0;
+
+        int count = 1;
+        string result = "";
+
+        while(i<n){
+            string word = "";
+
+            while(i<n && sentence[i] != ' '){
+                word += sentence[i];
+                i++;
+            }
+            
+            string modified_word = word + "ma";
+
+            if(vowels.count(word[0]) == 0){
+                modified_word = word.substr(1) + word[0] + "ma";
+            }
+            
+            int noOfAs = count++;
+            while(noOfAs--){
+                modified_word += 'a';
+            }
+            result += modified_word + " ";
+            i++;
+        }
+        result.pop_back();
+        return result;
+    }
+};
