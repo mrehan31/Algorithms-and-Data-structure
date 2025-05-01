@@ -1,0 +1,13 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        unordered_map<char, int> map;
+
+        for(int i=0; i<order.size(); i++) map[order[i]] = i;
+
+        sort(s.begin(), s.end(), [&](const char &a, const char &b){
+            return map[a] < map[b];
+        });
+        return s;
+    }
+};
