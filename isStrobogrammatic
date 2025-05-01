@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isStrobogrammatic(string num) {
+        unordered_map<char, char>map;
+        map['6'] = '9';
+        map['9'] = '6';
+        map['8'] = '8';
+        map['1'] = '1';
+        map['0'] = '0';
+
+        int l = 0, r = num.size()-1;
+
+        while(l<=r){
+            if(map.count(num[l]) == 0 || map.count(num[r]) == 0) return false;
+            if(num[l] != map[num[r]] || num[r] != map[num[l]])  return false;
+
+            l++;
+            r--;
+        }
+        return true;
+    }
+};
