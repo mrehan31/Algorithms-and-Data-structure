@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+        unordered_set<int> to_be_del_set(to_delete.begin(), to_delete.end());
+
+        vector<TreeNode*> forest;
+
+        if(root == nullptr || to_delete.size() == 0)    return forest;
+
+        queue<TreeNode*> q;
+
+        q.push(root);
+        if(to_be_del_set.count(root->val) == 0) forest.push_back(root);
+
+        while(!q.empty()){
+            TreeNode * curNode = q.front();
+            q.pop();
+            
+            if(to_be_del_set.count(curNode->val)){
+                if(curNode->left && to_be_del_set.count(curNode->left->val) == 0) forest.push_back(curNode->left);
+                if(curNode->right && to_be_del_set.count(curNode->right->val) == 0) forest.push_back(curNode->right);
+            }
+
+            if(curNode->left){
+                q.push(curNode->left);
+                if(to_be_del_set.count(curNode->left->val)) curNode->left = nullptr;
+            }
+            if(curNode->right){
+                q.push(curNode->right);
+                if(to_be_del_set.count(curNode->right->val))    curNode->right = nullptr;
+            }
+        }
+        return forest;
+    }
+};
