@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        map<int, int> map;
+
+        for(auto interval:intervals){
+            int start = interval[0], end = interval[1];
+
+            map[start]++;
+            map[end]--;
+        }
+
+        int count = 0, rooms = 0;
+
+        for(auto &[key, val]: map){
+            count += val;
+            rooms = max(rooms, count);
+        }
+        return rooms;
+    }
+};
