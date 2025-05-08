@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        queue<TreeNode*> q;
+
+        if(root == nullptr) return true;
+
+        q.push(root);
+        bool firstNullFound = false;
+
+        while(!q.empty()){
+            TreeNode* curNode = q.front();
+            q.pop();
+            if(curNode == nullptr)  firstNullFound = true;
+            else{
+                if(firstNullFound) return false;
+                q.push(curNode->left);
+                q.push(curNode->right);
+            }
+        }
+        return true;
+    }
+};
