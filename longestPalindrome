@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int maxlen = 0;
+        vector<int> indices(2, -1);
+
+        for(float i=0; i<=s.size(); i += 0.5){
+            int l = floor(i), r = ceil(i);
+            while(l>=0 && r<s.size() && s[l] == s[r]){
+                if(r-l+1 > maxlen){
+                    maxlen = r-l+1;
+                    indices = {l, r};
+                }
+                l--;
+                r++;
+            }
+        }
+        string result = s.substr(indices[0], maxlen);
+        return result;
+    }
+};
