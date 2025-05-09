@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int maxArea = 0;
+        int res = 0;
+        int m = grid.size();
+        int n = grid[0].size();
+
+        for(int i=0; i<m; i++){
+            for(int j = 0; j<n; j++){
+                if(grid[i][j] == 1){
+                    maxArea = 0;
+                    dfs(grid, maxArea, m, n, i, j);
+                    res = max(res, maxArea);
+                }
+            }
+        }
+        return res;
+    }
+    private:
+    
+    vector<vector<int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    void dfs(vector<vector<int>>& grid, int& maxArea, int m, int n, int i, int j){
+        if(i < 0 || i >= m || j<0 || j>=n || grid[i][j] == 0)     return;
+
+        maxArea++;
+        grid[i][j] = 0;
+
+        for(auto &d:dir){
+            int r = i + d[0], c = j + d[1];
+            dfs(grid, maxArea, m, n, r, c);
+        }
+    }
+};
