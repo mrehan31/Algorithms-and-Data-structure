@@ -1,0 +1,23 @@
+class Solution {
+    int findMissingNo(vector<int>&nums, int i){
+        int offset = nums[i] - nums[0];
+        return offset-i;
+    }
+public:
+    int missingElement(vector<int>& nums, int k) {
+        int n = nums.size();
+        int left = 0, right = n - 1;
+        int index = -1;
+        
+        while (left < right) {
+            int mid = right - (right - left) / 2;
+            if (findMissingNo(nums, mid) < k) {
+                left = mid;
+            } else{
+                right = mid - 1;
+            }
+        }
+        
+        return nums[0] + k + left;
+    }
+};
