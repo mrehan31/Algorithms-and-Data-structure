@@ -1,0 +1,22 @@
+class Solution {
+    pair<int,int> helper(TreeNode* root, int &result){
+        if(root == nullptr) return {0, 0};
+
+        pair<int, int> left_subtree = helper(root->left, result);
+        pair<int, int> right_subtree = helper(root->right, result);
+
+        int sum = root->val + left_subtree.first + right_subtree.first;
+        int count = 1 + left_subtree.second + right_subtree.second;
+
+        if(root->val == sum/count)  result++;
+
+        return {sum, count};
+    }
+public:
+    int averageOfSubtree(TreeNode* root) {
+        if(root == nullptr) return 0;
+        int result = 0;
+        helper(root, result);
+        return result;
+    }
+};
