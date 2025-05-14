@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> findRLEArray(vector<vector<int>>& encoded1, vector<vector<int>>& encoded2) {
+        int i = 0, j = 0;
+        vector<vector<int>> result;
+
+        while(i < encoded1.size() && j < encoded2.size()){
+            int minFreq = min(encoded1[i][1], encoded2[j][1]);
+            int prod = encoded1[i][0] * encoded2[j][0];
+            if(result.size() > 0 && result.back()[0] == prod)   result.back()[1] += minFreq;
+            else    result.push_back({prod, minFreq});
+
+            if(encoded1[i][1] < encoded2[j][1]){
+                i++;
+                encoded2[j][1] -= minFreq;
+            }
+            else{
+                if(encoded1[i][1] > encoded2[j][1]){
+                    j++;
+                    encoded1[i][1] -= minFreq;
+                }
+                else{
+                    i++;
+                    j++;
+                }
+            }
+        }
+        return result;
+    }
+};
