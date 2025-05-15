@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> minAvailableDuration(vector<vector<int>>& slots1, vector<vector<int>>& slots2, int duration) {
+        map<int, int> map;
+
+        for(auto &slot: slots1){
+            map[slot[0]]++;
+            map[slot[1]]--;
+        }
+        for(auto &slot: slots2){
+            map[slot[0]]++;
+            map[slot[1]]--;
+        }
+        int current, count = 0, prev = -1;
+
+        for(auto &[key, val]: map){
+            count += val;
+            current = key;
+
+            if(count == 2){
+                prev = key;
+            }
+            else if(prev != -1){
+                if(current - prev >= duration)    return {prev, prev+duration};
+                else prev = -1;
+            }
+        }
+        return vector<int>();
+    }
+};
