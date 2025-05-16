@@ -1,0 +1,39 @@
+class Solution {
+    void leftBoundary(TreeNode*root, vector<int>&res){
+        if(root == nullptr || (!root->left && !root->right)) return;
+        res.push_back(root->val);
+        if(root->left)  leftBoundary(root->left, res);
+        else leftBoundary(root->right, res);
+    }
+
+    void rightBoundary(TreeNode*root, vector<int>&res){
+        if(root == nullptr || (!root->left && !root->right)) return;
+        if(root->right)  rightBoundary(root->right, res);
+        else rightBoundary(root->left, res);
+        res.push_back(root->val);
+    }
+
+    void leafTraversal(TreeNode*root, vector<int>&res){
+        if(root == nullptr) return;
+        if(root->left == nullptr && root->right == nullptr){
+            res.push_back(root->val);
+            return;
+        }
+        leafTraversal(root->left, res);
+        leafTraversal(root->right, res);
+    }
+public:
+    vector<int> boundaryOfBinaryTree(TreeNode* root) {
+        vector<int> res;
+        if(root == nullptr) return res;
+
+        res.push_back(root->val);
+
+        if(root->left == nullptr && root->right == nullptr) return res;
+
+        leftBoundary(root->left, res);
+        leafTraversal(root, res);
+        rightBoundary(root->right, res);
+        return res;
+    }
+};
