@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        long long maxWeight = 0, totalWeight = 0;
+
+        for(long long weight:weights){
+            totalWeight += weight;
+            maxWeight = max(maxWeight, weight);
+        }
+        long long l = maxWeight, r = totalWeight;
+        long long result = 0;
+        while(l<=r){
+            long long mid = l + (r-l)/2;
+
+            if(ifFeasible(weights, days, mid)){
+                result = mid;
+                r = mid-1;
+            }
+            else
+                l = mid + 1;
+        }
+        return result;
+    }
+
+    bool ifFeasible(vector<int> &weights, int days, long long cap){
+        int i = 0;
+        while(i < weights.size()){
+            long long temp = cap;
+            while(i < weights.size() && temp >= weights[i]){
+                temp -= weights[i];
+                i++;
+            }
+            days--;
+            if(days < 0)    return false;
+        }
+        return true;
+    }
+};
