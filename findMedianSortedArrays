@@ -1,0 +1,33 @@
+class Solution {
+    int solve(vector<int>&nums_a, vector<int>&nums_b, int k, int aStart, int aEnd, int bStart, int bEnd){
+        if(aEnd < aStart)   return nums_b[k-aStart];
+        
+        if(bEnd < bStart)   return nums_a[k-bStart];
+
+        int midA = (aStart + aEnd)/2, midB = (bStart, bEnd);
+        int valA = nums_a[midA], valB = nums_b[midB];
+
+        if(midA + midB < k){
+            if(valA < valB)
+                return solve(nums_a, nums_b, k, midA+1, aEnd, bStart, bEnd);
+            else
+                return solve(nums_a, nums_b, k, aStart, aEnd, midB+1, bEnd);
+        }
+        else{if(valA < valB)
+                return solve(nums_a, nums_b, k, aStart, aEnd, bStart, midB-1);
+            else
+                return solve(nums_a, nums_b, k, aStart, midA-1, bStart, bEnd);
+        }
+    }
+public:
+    double findMedianSortedArrays(vector<int>& nums_a, vector<int>& nums_b) {
+        int n = nums_a.size(), m = nums_b.size();
+        int k = (n+m)/2;
+        if((n+m)%2 == 1){            
+            return solve(nums_a, nums_b, k, 0, n-1, 0, m - 1);
+        }
+        else{
+            return (solve(nums_a, nums_b, k-1, 0, n-1, 0, m - 1) + solve(nums_a, nums_b, k, 0, n-1, 0, m - 1))/2.0;
+        }
+    }
+};
