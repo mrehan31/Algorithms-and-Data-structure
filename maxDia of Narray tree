@@ -1,0 +1,28 @@
+class Solution {
+    int maxDia = 0;
+    int helper(Node* root){
+        if(root == nullptr) return 0;
+
+        int height1 = 0, height2 = 0;
+        for(Node* child: root->children){
+            int height = helper(child);
+            if(height > height1){
+                height2 = height1;
+                height1 = height;
+            }
+            else{
+                if(height > height2){
+                    height2 = height;
+                }
+            }
+        }
+        maxDia = max(maxDia, height1+height2);
+        return 1 + height1;
+
+    }
+public:
+    int diameter(Node* root) {
+        helper(root);
+        return maxDia;
+    }
+};
