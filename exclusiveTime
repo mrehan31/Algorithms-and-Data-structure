@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        vector<int> res(n, 0);
+        stack<pair<int, int>> stack;
+        int prev = 0;
+
+        for(string &log: logs){
+            int id = stoi(log.substr(0,log.find(':')));
+            int time = stoi(log.substr(log.rfind(':')+1));
+
+            if(log.find('e') != -1){
+                res[id] += time - prev + 1;;
+                stack.pop();
+                prev = time + 1;
+            }
+            else{
+                if(!stack.empty()){
+                    res[stack.top().first] += time - prev;
+                }
+                stack.push({id, time});
+                prev = time;
+            }
+        }
+        return res;
+    }
+};
