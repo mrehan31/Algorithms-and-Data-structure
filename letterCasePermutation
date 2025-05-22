@@ -1,0 +1,26 @@
+class Solution {
+    void helper(string &s, int i, vector<string>&result){
+        if(i == s.size()){
+            result.push_back(s);
+            return;
+        }
+        if(!isdigit(s[i])){
+            s[i] = toupper(s[i]);
+            helper(s, i+1, result);
+            s[i] = tolower(s[i]);
+            helper(s, i+1, result);
+        }
+        else{
+            helper(s, i+1, result);
+        }
+    }
+public:
+    vector<string> letterCasePermutation(string s) {
+        vector<string> result;
+
+        string curStr = "";
+
+        helper(s, 0, result);
+        return result;
+    }
+};
