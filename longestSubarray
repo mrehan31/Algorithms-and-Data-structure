@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int countZeros = 0;
+        int start = 0, end = 0;
+        int longestSubArray = 0;
+
+        while(end< nums.size()){
+            countZeros += (nums[end] == 0);
+
+            while(countZeros > 1){
+                countZeros -= nums[start] == 0;
+                start++;
+            }
+            longestSubArray = max(longestSubArray, end-start);
+            end++;
+        }
+        return longestSubArray;
+    }
+};
