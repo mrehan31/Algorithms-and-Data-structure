@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> arrayRankTransform(vector<int>& arr) {
+        vector<int>copiedArr(arr);
+        sort(copiedArr.begin(), copiedArr.end());
+
+        if(arr.size() == 0) return vector<int>();
+
+        int rank = 1;
+        unordered_map<int, int> ranks;
+        ranks[copiedArr[0]] = 1;
+
+        for(int i=1; i<copiedArr.size(); i++){
+            if(copiedArr[i-1] < copiedArr[i]){
+                rank++;
+                ranks[copiedArr[i]] = rank;
+            }
+        }
+        for(int i=0; i<arr.size(); i++){
+            arr[i] = ranks[arr[i]];
+        }
+        return arr;
+    }
+};
