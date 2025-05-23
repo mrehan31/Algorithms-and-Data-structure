@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string tictactoe(vector<vector<int>>& moves) {
+        vector<int> rows(3, 0), cols(3, 0);
+        int diag1 = 0, diag2 = 0;
+
+        int count = 0;
+
+        for(auto &move: moves){
+            int i = move[0], j = move[1];
+            int change = count%2? 1:-1;
+            rows[i] += change;
+            cols[j] += change;
+
+            if(i == j) diag1 += change;
+            if(i == 2-j) diag2 += change;
+            count++;
+
+            if(abs(rows[i]) == 3 ||
+               abs(cols[j]) == 3 ||
+               abs(diag1) == 3 ||
+               abs(diag2) == 3){
+                return count%2 == 1?"A":"B";
+            }
+        }
+        return moves.size() == 9?"Draw":"Pending";
+    }
+};
