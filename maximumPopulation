@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maximumPopulation(vector<vector<int>>& logs) {
+        map<int, int> map;
+
+        for(auto log: logs){
+            int born = log[0], dead = log[1];
+            map[born]++;
+            map[dead]--;
+        }
+        int maxPop = 0, maxPopYr = 0;
+        int curPop = 0;
+        for(auto &[yr, pop]: map){
+            curPop += pop;
+            if(curPop > maxPop){
+                maxPop = curPop;
+                maxPopYr = yr;
+            }
+        }
+        return maxPopYr;
+    }
+};
