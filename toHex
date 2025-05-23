@@ -1,0 +1,16 @@
+class Solution {
+public:
+    string toHex(int num) {
+        string result = "";
+        string mapping = "0123456789abcdef";
+        int count = 0;
+
+        while(num && count < 8){
+            int digit = num & 0xf;
+            result = mapping[digit] + result;
+            num >>= 4;
+            count++;
+        }
+        return result != ""? result:"0";
+    }
+};
