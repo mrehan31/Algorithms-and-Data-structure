@@ -1,0 +1,22 @@
+class Solution {
+    int helper(vector<int>&days, vector<int>&costs, int curDay, unordered_set<int>&travelDays,
+    vector<int>&memo){
+        if(curDay > days.back())    return 0;
+        if(memo[curDay] != -1)  return memo[curDay];
+
+        if(travelDays.count(curDay) == 0)   return helper(days, costs, curDay+1, travelDays, memo);
+        
+        int cost_one_day = costs[0] + helper(days, costs, curDay+1, travelDays, memo);
+        int cost_7days = costs[1] + helper(days, costs, curDay+7, travelDays, memo);
+        int cost_30days = costs[2] + helper(days, costs, curDay+30, travelDays, memo);
+        return memo[curDay] = min(cost_one_day, min(cost_7days, cost_30days));
+    }
+public:
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        int last_day = days.back();
+        vector<int> memo(last_day+1, -1);
+        unordered_set<int>travelDays(days.begin(), days.end());
+
+        return helper(days, costs, 0, travelDays, memo);
+    }
+};
