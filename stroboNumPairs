@@ -1,0 +1,23 @@
+class Solution {
+    vector<vector<char>> stroboNumPairs = {{'0','0'}, {'1', '1'}, {'8', '8'}, {'6', '9'}, {'9', '6'}};
+    vector<string>findStrobogrammaticRec(int n, int finalLen){
+        if(n == 0)  return {""};
+        if(n == 1)  return {"0", "1", "8"};
+
+        vector<string> prevStroboStr = findStrobogrammaticRec(n-2, finalLen);
+        vector<string> curStrobStr;
+
+        for(string &prevStr: prevStroboStr){
+            for(auto &stroboChar: stroboNumPairs){
+                if(stroboChar[0] != '0' || n != finalLen){
+                    curStrobStr.push_back(stroboChar[0] + prevStr + stroboChar[1]);
+                }
+            }
+        }
+        return curStrobStr;
+    }
+public:
+    vector<string> findStrobogrammatic(int n) {
+        return findStrobogrammaticRec(n, n);
+    }
+};
