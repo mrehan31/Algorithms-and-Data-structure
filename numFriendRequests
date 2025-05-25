@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        vector<int>count(121, 0);
+
+        for(int age:ages)    count[age]++;
+
+        int res = 0;
+        
+        for(int X=1; X<=120; ++X){
+            for(int Y=1; Y<=120; ++Y){
+                if(Y <= (0.5 * X + 7) || Y>X || Y>100 && X<100) continue;
+                res += count[X]*(count[Y] - (X==Y?1:0));
+            }
+        }
+
+        return res; 
+    }
+};
