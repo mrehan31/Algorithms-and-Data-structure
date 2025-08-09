@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> verticalOrder(TreeNode* root) {
+        queue<pair<int,TreeNode*>> queue; // data: <level, Node*>
+        vector<vector<int>> result;
+        unordered_map<int, vector<int>> map;
+
+        int minVal = 0, maxVal = 0;
+
+        if(!root)   return result;
+
+        queue.push({0, root});
+        while(!queue.empty()){
+            auto [level, curNode] = queue.front();
+            queue.pop();
+            map[level].push_back(curNode->val);
+            minVal = min(minVal, level);
+            maxVal = max(maxVal, level);
+
+            if(curNode->left)   queue.push({level-1, curNode->left});
+            if(curNode->right)   queue.push({level+1, curNode->right});
+        }
+        for(int i=minVal; i<=maxVal; i++){
+            result.push_back(map[i]);
+        }
+        return result;
+    }
+};
