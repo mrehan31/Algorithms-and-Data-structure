@@ -1,0 +1,32 @@
+class Solution {
+    bool isNum(char ch){
+        return ch>='0' && ch <= '9';
+    }
+public:
+    bool validWordAbbreviation(string word, string abbr) {
+        int p1 = 0, p2 = 0;
+        int skipCount = 0;
+
+        while(p1 < word.size() && p2 < abbr.size()){
+            int skipCount = 0;
+            if(isNum(abbr[p2])){
+                if(abbr[p2] == '0') return false;
+                string count = "";
+
+                while(p2 < abbr.size() && isNum(abbr[p2])){
+                    count += abbr[p2];
+                    p2++;
+                }
+                skipCount = stoi(count);
+                p1 += skipCount;
+                if(p1 > word.size() || (p1 == word.size() && p2 != abbr.size()))   return false;
+            }
+            else{
+                if(word[p1] != abbr[p2])    return false;
+                p1++;
+                p2++;
+            }
+        }
+        return p1 == word.size() && p2 == abbr.size();
+    }
+};
