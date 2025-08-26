@@ -1,0 +1,41 @@
+class Solution {
+    vector<int> runningSum;
+    int totalSum = 0;
+public:
+    Solution(vector<int>& w) {
+        int curSum = 0;
+
+        for(int curWt: w){
+            curSum += curWt;
+            runningSum.push_back(curSum);
+        }        
+        totalSum = curSum;
+    }
+    
+    int pickIndex() {
+        int target = rand()%totalSum + 1;
+
+        int left = 0, right = runningSum.size()-1;
+        int result = 0;
+        while(left <= right){
+            int mid = left + (right - left)/2;
+
+            if(runningSum[mid] == target)   return mid;
+            else{
+                if(runningSum[mid] > target){
+                    result = mid;
+                    right = mid - 1;
+                }
+                else
+                    left = mid + 1;
+            }
+        }
+        return result;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(w);
+ * int param_1 = obj->pickIndex();
+ */
