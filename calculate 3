@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> stack;
+        int operand = 0;
+        char operation = '+';
+
+        for(int i=0; i<s.size(); i++){
+            if(isdigit(s[i])){
+                operand = operand*10 + (s[i] - '0');
+            }
+            if((!iswspace(s[i]) && !isdigit(s[i])) || i == s.size()-1){
+                if(operation == '+')    stack.push(operand);
+                if(operation == '-')    stack.push(-operand);
+                if(operation == '*'){
+                    int operand2 = stack.top();
+                    stack.pop();
+                    stack.push(operand2 * operand);
+                }
+                if(operation == '/'){
+                    int operand2 = stack.top();
+                    stack.pop();
+                    stack.push(operand2 / operand);
+                }
+                operation = s[i];
+                operand = 0;
+            }
+        }
+        int result = 0;
+        while(!stack.empty()){
+            result += stack.top();
+            stack.pop();
+        }
+        return result;
+    }
+};
