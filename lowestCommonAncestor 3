@@ -1,0 +1,31 @@
+class Solution {
+public:
+    Node* lowestCommonAncestor(Node* p, Node * q) {
+        int depth_p= 0, depth_q = 0;
+        Node *curNode = p;
+        while(curNode->parent){
+            depth_p++;
+            curNode = curNode->parent;
+        }
+        curNode = q;
+        while(curNode->parent){
+            depth_q++;
+            curNode = curNode->parent;
+        }
+        Node* temp_p = p, *temp_q = q;
+
+        while(depth_p > depth_q){
+            temp_p = temp_p->parent;
+            depth_p--;
+        }
+        while(depth_q > depth_p){
+            temp_q = temp_q->parent;
+            depth_q--;
+        }
+        while(temp_p != temp_q){
+            temp_p = temp_p->parent;
+            temp_q = temp_q->parent;
+        }
+        return temp_p;
+    }
+};
