@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        unordered_map<char, int> map;
+
+        for(char ch:s) map[ch]++;
+
+        string result = "";
+        for(char ch: order){
+            while(map[ch]){
+                result += ch;
+                map[ch]--;
+            }
+        }
+        for(auto [ch, count]: map){
+            while(count){
+                result += ch;
+                count--;
+            }
+        }
+        return result;
+    }
+};
