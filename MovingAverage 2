@@ -1,0 +1,23 @@
+class MovingAverage {
+    vector<int> arr;
+    int arrSize, start = 0, end = 0, sum = 0, count = 0;
+public:
+    MovingAverage(int size): arrSize(size) {
+        arr.resize(size);
+    }
+    
+    double next(int val) {
+        if(count == arrSize){
+            sum -= arr[start];
+            start++;
+            start = start % arrSize; 
+            count--;
+        }
+        arr[end] = val;
+        sum += val;
+        end++;
+        end = end%arrSize;
+        count++;
+        return double(sum)/count;
+    }
+};
