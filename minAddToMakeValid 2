@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        int count = 0;
+        int noOfInsertion = 0;
+        for(char ch: s){
+            if(ch == '(')   count++;
+            else    count--;
+
+            if(count < 0){
+                noOfInsertion++;
+                count = 0;
+            }     
+        }
+        return count + noOfInsertion;
+    }
+};
