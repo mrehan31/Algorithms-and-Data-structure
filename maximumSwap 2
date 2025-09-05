@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maximumSwap(int num) {
+        string num_str = to_string(num);
+        vector<int> rightMax(num_str.size(), num_str.size()-1);
+
+        char maxVal = num_str.back();
+
+        for(int i=num_str.size()-2; i>=0; i--){
+            if(num_str[i] > maxVal){
+                rightMax[i] = i;
+                maxVal = num_str[i];
+            }
+            else
+                rightMax[i] = rightMax[i+1];
+        }
+
+        for(int i=0; i<num_str.size()-1; i++){
+            if(num_str[i] < num_str[rightMax[i+1]]){
+                swap(num_str[i], num_str[rightMax[i+1]]);
+                break;
+            }
+        }
+        return stoi(num_str);
+    }
+};
