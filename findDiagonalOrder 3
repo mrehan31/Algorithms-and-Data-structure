@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+        unordered_map<int, vector<int>> map;
+        
+        for(int i=0; i<mat.size(); i++){
+            for(int j=0; j<mat[0].size(); j++){
+                map[i+j].push_back(mat[i][j]);
+            }
+        }
+        vector<int> result;
+        for(int i=0; i<mat.size()+mat[0].size()-1; i++){
+            vector<int> curVec = map[i];
+            if(i%2==0) reverse(curVec.begin(), curVec.end());
+            for(int num: curVec)    result.push_back(num);
+        }
+        return result;
+    }
+};
