@@ -1,0 +1,36 @@
+#include <vector>
+#include <iostream>
+using namespace std;
+
+class Solution {
+public:
+    int maximumPopulation(vector<vector<int>>& logs) {
+        vector<int> population(101, 0);
+
+        for(auto &log: logs){
+            int bornIndex = log[0] - 1950;
+            population[bornIndex]++;
+
+            int deathIndex = log[1] - 1950;
+            population[deathIndex]--;
+        }
+
+        int maxPopulation = 0, maxPapulationYear = 1950;
+        int curAlive = 0;
+        for(int i=1; i<=100; i++){
+            curAlive += population[i];
+            if(curAlive > maxPopulation){
+                maxPopulation = curAlive;
+                maxPapulationYear = 1950 + i;
+            }
+        }
+        return maxPapulationYear;
+/*
+     [[1980, 1990], [1975, 1985], [1985, 1995], [1990, 2000], [1999, 2020], [1994, 2032]]
+    30: 1
+    40: -1
+*/
+
+        return 0;
+    }
+};
